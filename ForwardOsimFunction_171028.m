@@ -313,6 +313,12 @@ function ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
 %     disp(['joint2 sp: [' num2str(dq2/pi*180.) ']/desired[' num2str(dq2_des/pi*180.) '] ']);
     
     osimModel.realizeDynamics(s);
+
+    smss = osimModel.getMatterSubsystem();
+    JointRF = VectorOfSpatialVec();
+    smss.calcMobilizerReactionForces(s, JointRF);
+    
+    
     ForceSet = osimModel.getForceSet();
     Contact1 = ForceSet.get('Contact1');
     Contact_Forces = Contact1.getRecordValues(s);
