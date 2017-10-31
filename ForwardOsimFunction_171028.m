@@ -153,6 +153,39 @@ function ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
     
     controlTorque_array = MUDot_array + Cq_array - G_array;
     
+    link2 = osimModel.getBodySet().get('link2');
+    link2_Mob = link2.getMobilizedBodyIndex;
+    MM = Matrix();
+    smss.calcFrameJacobian(s, link2_Mob, Vec3(1,0,0),MM);
+    MM_array =osimMatrixToArray(MM);
+    MM_array_tran = MM_array';
+    
+    J = Matrix(); 
+    smss.calcStationJacobian(s, link2_Mob, Vec3(0),J);
+    J_array = osimMatrixToArray(J);
+    J_array_tran = J_array';
+    
+    MInv_JTcol = Vector();
+    f_GP = zeros(1,3);
+    J_MInv_JT_array = zeros(3,3);
+    
+    for ii=1:3
+        f_GP(ii)=1;
+        JTcol_array = J_array_tran * f_GP';
+        f_GP(ii)=0;
+        
+        JTcol = osimVectorFromArray(JTcol_array');
+        smss.multiplyByMInv(s, JTcol, MInv_JTcol);
+        MInv_JTcol_array = osimVectorToArray(MInv_JTcol);
+
+        J_MInv_JT_array(:,ii) = J_array * MInv_JTcol_array';
+    end
+    J_MInv_JT = osimMatrixFromArray(J_MInv_JT_array);
+    J_Minv_JTInv_array = inv(J_MInv_JT_array);
+    
+    
+
+    
 %     FSS = osimModel.getForceSet();
 %     FSS1 = FSS.get(1);
 %     FSS1.getRecordValues(osimState)
@@ -162,6 +195,7 @@ function ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
 %     FSS.getName
 %     FSS.getName(1)
 %     FSS.get(1).getName    
+
     
     for ii=1:size(controlTorque_array,2)
         if controlTorque_array(1,ii)>400.
@@ -316,7 +350,7 @@ function ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
 
     smss = osimModel.getMatterSubsystem();
     JointRF = VectorOfSpatialVec();
-    smss.calcMobilizerReactionForces(s, JointRF);
+  %  smss.calcMobilizerReactionForces(s, JointRF);
     
     
     ForceSet = osimModel.getForceSet();
