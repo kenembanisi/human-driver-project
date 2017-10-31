@@ -600,11 +600,11 @@
 							<ElasticFoundationForce::ContactParameters>
 								<!--Names of geometry objects affected by these parameters.-->
 								<geometry>wallContact link1_contact link2_contact</geometry>
-								<stiffness>10000000</stiffness>
-								<dissipation>1</dissipation>
+								<stiffness>13000000</stiffness>
+								<dissipation>5</dissipation>
 								<static_friction>0.9</static_friction>
-								<dynamic_friction>0.6</dynamic_friction>
-								<viscous_friction>0.6</viscous_friction>
+								<dynamic_friction>0.7</dynamic_friction>
+								<viscous_friction>0.7</viscous_friction>
 							</ElasticFoundationForce::ContactParameters>
 						</objects>
 						<groups />
