@@ -1,0 +1,542 @@
+Updating Model file from 30000 to latest format...
+Loaded model TwoLinkArm from file TwoLinkArmModel.osim
+Model 'TwoLinkArm' has subcomponents with duplicate name 'Pointer04'.
+The duplicate is being renamed to 'Pointer04_0'.
+Model 'TwoLinkArm' has subcomponents with duplicate name 'Pointer04'.
+The duplicate is being renamed to 'Pointer04_1'.
+Storage: file=PedalData\pedal_input_master.mot (nr=21 nc=2)
+Loaded marker file MarkerData\two_link_pedal_001.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 0
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_001.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0):	total squared error = 6.25519e-12, marker error: RMS=1.7685e-06, max=2.33821e-06 (Link2_Marker_1)
+Frame 1 (t=0.01):	total squared error = 0.00463045, marker error: RMS=0.0481168, max=0.061409 (Link2_Marker_1)
+Frame 2 (t=0.02):	total squared error = 0.0172632, marker error: RMS=0.0929063, max=0.122486 (Link2_Marker_1)
+Frame 3 (t=0.03):	total squared error = 0.0143939, marker error: RMS=0.0848349, max=0.102974 (Link2_Marker_1)
+Frame 4 (t=0.04):	total squared error = 0.00542072, marker error: RMS=0.0520611, max=0.0616912 (Link2_Marker_1)
+Frame 5 (t=0.05):	total squared error = 0.000283306, marker error: RMS=0.0119018, max=0.014054 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.007s
+
+Storage: file=Out_IK\two_link_pedal_001_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_002.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_002.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.05):	total squared error = 0.0030793, marker error: RMS=0.0392384, max=0.046642 (Link2_Marker_1)
+Frame 1 (t=0.06):	total squared error = 0.00226688, marker error: RMS=0.0336666, max=0.0397852 (Link2_Marker_1)
+Frame 2 (t=0.07):	total squared error = 0.00151385, marker error: RMS=0.0275123, max=0.0324019 (Link2_Marker_1)
+Frame 3 (t=0.08):	total squared error = 0.000866599, marker error: RMS=0.0208159, max=0.0244899 (Link2_Marker_1)
+Frame 4 (t=0.09):	total squared error = 0.000370209, marker error: RMS=0.0136053, max=0.0160253 (Link2_Marker_1)
+Frame 5 (t=0.1):	total squared error = 6.96131e-05, marker error: RMS=0.00589971, max=0.00697135 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.009s
+
+Storage: file=Out_IK\two_link_pedal_002_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_003.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_003.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.1):	total squared error = 0.00156808, marker error: RMS=0.0280007, max=0.0329848 (Link2_Marker_1)
+Frame 1 (t=0.11):	total squared error = 0.000884646, marker error: RMS=0.0210315, max=0.0247937 (Link2_Marker_1)
+Frame 2 (t=0.12):	total squared error = 0.000394845, marker error: RMS=0.0140507, max=0.0165784 (Link2_Marker_1)
+Frame 3 (t=0.13):	total squared error = 9.96111e-05, marker error: RMS=0.0070573, max=0.0083352 (Link2_Marker_1)
+Frame 4 (t=0.14):	total squared error = 4.99049e-09, marker error: RMS=4.99524e-05, max=5.9831e-05 (Link2_Marker_1)
+InverseKinematicsTool completed 4 frames in 0.007s
+
+Storage: file=Out_IK\two_link_pedal_003_ik.mot (nr=5 nc=4)
+Loaded marker file MarkerData\two_link_pedal_004.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_004.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.149):	total squared error = 0.000511207, marker error: RMS=0.0159876, max=0.0188519 (Link2_Marker_1)
+Frame 1 (t=0.159):	total squared error = 0.000135207, marker error: RMS=0.00822212, max=0.00970522 (Link2_Marker_1)
+Frame 2 (t=0.169):	total squared error = 3.88039e-07, marker error: RMS=0.000440476, max=0.000521294 (Link2_Marker_1)
+Frame 3 (t=0.179):	total squared error = 0.000108322, marker error: RMS=0.00735941, max=0.00870647 (Link2_Marker_1)
+Frame 4 (t=0.189):	total squared error = 0.000460823, marker error: RMS=0.0151793, max=0.0179826 (Link2_Marker_1)
+Frame 5 (t=0.199):	total squared error = 0.00113358, marker error: RMS=0.0238074, max=0.0282519 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.01s
+
+Storage: file=Out_IK\two_link_pedal_004_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_005.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_005.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.199):	total squared error = 3.21329e-06, marker error: RMS=0.00126753, max=0.00149655 (Link2_Marker_1)
+Frame 1 (t=0.209):	total squared error = 0.00014191, marker error: RMS=0.00842347, max=0.00996068 (Link2_Marker_1)
+Frame 2 (t=0.219):	total squared error = 0.000486465, marker error: RMS=0.0155959, max=0.0184658 (Link2_Marker_1)
+Frame 3 (t=0.229):	total squared error = 0.00103851, marker error: RMS=0.0227871, max=0.0270186 (Link2_Marker_1)
+Frame 4 (t=0.239):	total squared error = 0.00179991, marker error: RMS=0.0299993, max=0.0356254 (Link2_Marker_1)
+Frame 5 (t=0.249):	total squared error = 0.00288184, marker error: RMS=0.0379594, max=0.0451628 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.011s
+
+Storage: file=Out_IK\two_link_pedal_005_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_006.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_006.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.249):	total squared error = 0.000435661, marker error: RMS=0.0147591, max=0.0174609 (Link2_Marker_1)
+Frame 1 (t=0.259):	total squared error = 0.000811399, marker error: RMS=0.020142, max=0.0238559 (Link2_Marker_1)
+Frame 2 (t=0.269):	total squared error = 0.00130427, marker error: RMS=0.025537, max=0.0302815 (Link2_Marker_1)
+Frame 3 (t=0.279):	total squared error = 0.00191522, marker error: RMS=0.0309453, max=0.0367413 (Link2_Marker_1)
+Frame 4 (t=0.289):	total squared error = 0.00264525, marker error: RMS=0.0363679, max=0.0432384 (Link2_Marker_1)
+Frame 5 (t=0.299):	total squared error = 0.00358717, marker error: RMS=0.0423507, max=0.0504318 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.012s
+
+Storage: file=Out_IK\two_link_pedal_006_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_007.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_007.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.299):	total squared error = 0.0010416, marker error: RMS=0.022821, max=0.027036 (Link2_Marker_1)
+Frame 1 (t=0.309):	total squared error = 0.00124396, marker error: RMS=0.0249395, max=0.0295678 (Link2_Marker_1)
+Frame 2 (t=0.319):	total squared error = 0.00146462, marker error: RMS=0.0270612, max=0.0321035 (Link2_Marker_1)
+Frame 3 (t=0.329):	total squared error = 0.00170378, marker error: RMS=0.0291871, max=0.0346484 (Link2_Marker_1)
+Frame 4 (t=0.339):	total squared error = 0.00196156, marker error: RMS=0.0313174, max=0.0372027 (Link2_Marker_1)
+Frame 5 (t=0.349):	total squared error = 0.00226677, marker error: RMS=0.0336658, max=0.040024 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.011s
+
+Storage: file=Out_IK\two_link_pedal_007_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_008.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_008.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.349):	total squared error = 0.00109809, marker error: RMS=0.0234318, max=0.0277756 (Link2_Marker_1)
+Frame 1 (t=0.359):	total squared error = 0.000949922, marker error: RMS=0.0217936, max=0.0258342 (Link2_Marker_1)
+Frame 2 (t=0.369):	total squared error = 0.000812645, marker error: RMS=0.0201574, max=0.0238928 (Link2_Marker_1)
+Frame 3 (t=0.379):	total squared error = 0.00068628, marker error: RMS=0.018524, max=0.021955 (Link2_Marker_1)
+Frame 4 (t=0.389):	total squared error = 0.000570776, marker error: RMS=0.0168934, max=0.020021 (Link2_Marker_1)
+Frame 5 (t=0.399):	total squared error = 0.000456205, marker error: RMS=0.0151031, max=0.0178979 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.011s
+
+Storage: file=Out_IK\two_link_pedal_008_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_009.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_009.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.4):	total squared error = 0.000548295, marker error: RMS=0.0165574, max=0.0196249 (Link2_Marker_1)
+Frame 1 (t=0.41):	total squared error = 0.000307217, marker error: RMS=0.0123939, max=0.0146834 (Link2_Marker_1)
+Frame 2 (t=0.42):	total squared error = 0.000135663, marker error: RMS=0.00823598, max=0.00975131 (Link2_Marker_1)
+Frame 3 (t=0.43):	total squared error = 3.33674e-05, marker error: RMS=0.00408457, max=0.00483336 (Link2_Marker_1)
+Frame 4 (t=0.44):	total squared error = 7.32331e-09, marker error: RMS=6.05116e-05, max=7.11593e-05 (Link2_Marker_1)
+InverseKinematicsTool completed 4 frames in 0.009s
+
+Storage: file=Out_IK\two_link_pedal_009_ik.mot (nr=5 nc=4)
+Loaded marker file MarkerData\two_link_pedal_010.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_010.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.45):	total squared error = 7.18967e-05, marker error: RMS=0.00599569, max=0.00710143 (Link2_Marker_1)
+Frame 1 (t=0.46):	total squared error = 9.80995e-06, marker error: RMS=0.00221472, max=0.00262224 (Link2_Marker_1)
+Frame 2 (t=0.47):	total squared error = 4.87665e-06, marker error: RMS=0.00156151, max=0.0018461 (Link2_Marker_1)
+Frame 3 (t=0.48):	total squared error = 5.68824e-05, marker error: RMS=0.00533303, max=0.00630322 (Link2_Marker_1)
+Frame 4 (t=0.49):	total squared error = 0.000165623, marker error: RMS=0.00910007, max=0.0107499 (Link2_Marker_1)
+InverseKinematicsTool completed 4 frames in 0.009s
+
+Storage: file=Out_IK\two_link_pedal_010_ik.mot (nr=5 nc=4)
+Loaded marker file MarkerData\two_link_pedal_011.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_011.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.5):	total squared error = 1.17661e-05, marker error: RMS=0.0024255, max=0.00287037 (Link2_Marker_1)
+Frame 1 (t=0.51):	total squared error = 1.14874e-05, marker error: RMS=0.0023966, max=0.00283498 (Link2_Marker_1)
+Frame 2 (t=0.52):	total squared error = 1.1203e-05, marker error: RMS=0.00236674, max=0.00279923 (Link2_Marker_1)
+Frame 3 (t=0.53):	total squared error = 1.09114e-05, marker error: RMS=0.00233574, max=0.00276214 (Link2_Marker_1)
+Frame 4 (t=0.54):	total squared error = 1.0613e-05, marker error: RMS=0.00230359, max=0.00272372 (Link2_Marker_1)
+Frame 5 (t=0.55):	total squared error = 1.03085e-05, marker error: RMS=0.00227029, max=0.00268396 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.009s
+
+Storage: file=Out_IK\two_link_pedal_011_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_012.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_012.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.55):	total squared error = 9.33559e-06, marker error: RMS=0.00216051, max=0.00255499 (Link2_Marker_1)
+Frame 1 (t=0.56):	total squared error = 3.331e-05, marker error: RMS=0.00408106, max=0.00482845 (Link2_Marker_1)
+Frame 2 (t=0.57):	total squared error = 0.000213736, marker error: RMS=0.0103377, max=0.0122418 (Link2_Marker_1)
+Frame 3 (t=0.58):	total squared error = 0.000551776, marker error: RMS=0.0166099, max=0.0196878 (Link2_Marker_1)
+Frame 4 (t=0.59):	total squared error = 0.00104864, marker error: RMS=0.022898, max=0.0271687 (Link2_Marker_1)
+InverseKinematicsTool completed 4 frames in 0.009s
+
+Storage: file=Out_IK\two_link_pedal_012_ik.mot (nr=5 nc=4)
+Loaded marker file MarkerData\two_link_pedal_013.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_013.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.6):	total squared error = 0.000171162, marker error: RMS=0.009251, max=0.010939 (Link2_Marker_1)
+Frame 1 (t=0.61):	total squared error = 0.000978724, marker error: RMS=0.0221215, max=0.0262136 (Link2_Marker_1)
+Frame 2 (t=0.62):	total squared error = 0.00245752, marker error: RMS=0.0350536, max=0.0416429 (Link2_Marker_1)
+Frame 3 (t=0.63):	total squared error = 0.00461914, marker error: RMS=0.048058, max=0.0572595 (Link2_Marker_1)
+Frame 4 (t=0.64):	total squared error = 0.00747746, marker error: RMS=0.0611452, max=0.0730945 (Link2_Marker_1)
+Frame 5 (t=0.65):	total squared error = 0.0110485, marker error: RMS=0.0743252, max=0.0891747 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.012s
+
+Storage: file=Out_IK\two_link_pedal_013_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_014.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_014.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.65):	total squared error = 0.00172834, marker error: RMS=0.0293968, max=0.0348085 (Link2_Marker_1)
+Frame 1 (t=0.66):	total squared error = 0.00438771, marker error: RMS=0.0468386, max=0.0556687 (Link2_Marker_1)
+Frame 2 (t=0.67):	total squared error = 0.00830218, marker error: RMS=0.064429, max=0.0769267 (Link2_Marker_1)
+Frame 3 (t=0.68):	total squared error = 0.0135134, marker error: RMS=0.0821993, max=0.0986695 (Link2_Marker_1)
+Frame 4 (t=0.69):	total squared error = 0.0200713, marker error: RMS=0.100178, max=0.120974 (Link2_Marker_1)
+InverseKinematicsTool completed 4 frames in 0.011s
+
+Storage: file=Out_IK\two_link_pedal_014_ik.mot (nr=5 nc=4)
+Loaded marker file MarkerData\two_link_pedal_015.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_015.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.699):	total squared error = 0.00483881, marker error: RMS=0.0491875, max=0.0583414 (Link2_Marker_1)
+Frame 1 (t=0.709):	total squared error = 0.00903859, marker error: RMS=0.0672257, max=0.0801218 (Link2_Marker_1)
+Frame 2 (t=0.719):	total squared error = 0.014613, marker error: RMS=0.0854782, max=0.102468 (Link2_Marker_1)
+Frame 3 (t=0.729):	total squared error = 0.0216231, marker error: RMS=0.103979, max=0.125473 (Link2_Marker_1)
+Frame 4 (t=0.739):	total squared error = 0.0301375, marker error: RMS=0.122755, max=0.149204 (Link2_Marker_1)
+Frame 5 (t=0.749):	total squared error = 0.041328, marker error: RMS=0.14375, max=0.176202 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.015s
+
+Storage: file=Out_IK\two_link_pedal_015_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_016.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_016.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.749):	total squared error = 0.00860943, marker error: RMS=0.0656103, max=0.0779359 (Link2_Marker_1)
+Frame 1 (t=0.759):	total squared error = 0.0126047, marker error: RMS=0.0793872, max=0.09474 (Link2_Marker_1)
+Frame 2 (t=0.769):	total squared error = 0.0174297, marker error: RMS=0.0933534, max=0.112001 (Link2_Marker_1)
+Frame 3 (t=0.779):	total squared error = 0.0231224, marker error: RMS=0.107523, max=0.129763 (Link2_Marker_1)
+Frame 4 (t=0.789):	total squared error = 0.029722, marker error: RMS=0.121906, max=0.148052 (Link2_Marker_1)
+Frame 5 (t=0.799):	total squared error = 0.0380776, marker error: RMS=0.137981, max=0.168798 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.014s
+
+Storage: file=Out_IK\two_link_pedal_016_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_017.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_017.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.799):	total squared error = 0.010155, marker error: RMS=0.0712566, max=0.0846795 (Link2_Marker_1)
+Frame 1 (t=0.809):	total squared error = 0.0118785, marker error: RMS=0.0770667, max=0.0918525 (Link2_Marker_1)
+Frame 2 (t=0.819):	total squared error = 0.0137709, marker error: RMS=0.0829786, max=0.0992153 (Link2_Marker_1)
+Frame 3 (t=0.829):	total squared error = 0.0158392, marker error: RMS=0.0889921, max=0.106772 (Link2_Marker_1)
+Frame 4 (t=0.839):	total squared error = 0.0180906, marker error: RMS=0.0951069, max=0.114525 (Link2_Marker_1)
+Frame 5 (t=0.849):	total squared error = 0.0207873, marker error: RMS=0.101949, max=0.123282 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.014s
+
+Storage: file=Out_IK\two_link_pedal_017_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_018.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_018.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.849):	total squared error = 0.0094222, marker error: RMS=0.0686374, max=0.0817541 (Link2_Marker_1)
+Frame 1 (t=0.859):	total squared error = 0.00845477, marker error: RMS=0.0650183, max=0.0774613 (Link2_Marker_1)
+Frame 2 (t=0.869):	total squared error = 0.00754725, marker error: RMS=0.0614298, max=0.0732044 (Link2_Marker_1)
+Frame 3 (t=0.879):	total squared error = 0.0066987, marker error: RMS=0.0578736, max=0.0689863 (Link2_Marker_1)
+Frame 4 (t=0.889):	total squared error = 0.00590806, marker error: RMS=0.054351, max=0.0648084 (Link2_Marker_1)
+Frame 5 (t=0.899):	total squared error = 0.00510391, marker error: RMS=0.0505169, max=0.0602609 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.013s
+
+Storage: file=Out_IK\two_link_pedal_018_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_019.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_019.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.899):	total squared error = 0.00550527, marker error: RMS=0.0524656, max=0.0626395 (Link2_Marker_1)
+Frame 1 (t=0.909):	total squared error = 0.00372753, marker error: RMS=0.0431713, max=0.051435 (Link2_Marker_1)
+Frame 2 (t=0.919):	total squared error = 0.00230084, marker error: RMS=0.0339179, max=0.0403327 (Link2_Marker_1)
+Frame 3 (t=0.929):	total squared error = 0.0012204, marker error: RMS=0.0247022, max=0.0293229 (Link2_Marker_1)
+Frame 4 (t=0.939):	total squared error = 0.000481841, marker error: RMS=0.0155216, max=0.018396 (Link2_Marker_1)
+Frame 5 (t=0.949):	total squared error = 5.96385e-05, marker error: RMS=0.0054607, max=0.006462 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.012s
+
+Storage: file=Out_IK\two_link_pedal_019_ik.mot (nr=6 nc=4)
+Loaded marker file MarkerData\two_link_pedal_020.trc (2 markers, 6 frames)
+
+               MODEL: TwoLinkArm
+         coordinates: 3
+              forces: 4
+           actuators: 2
+             muscles: 0
+            analyses: 6
+              probes: 0
+              bodies: 10
+              joints: 10
+         constraints: 0
+             markers: 12
+         controllers: 1
+  contact geometries: 3
+misc modelcomponents: 0
+Running tool two_link_pedal_020.
+WARNING: InverseKinematicsSolver found only 2 markers to track.
+Frame 0 (t=0.949):	total squared error = 0.00163063, marker error: RMS=0.0285537, max=0.0340186 (Link2_Marker_1)
+Frame 1 (t=0.959):	total squared error = 0.000830179, marker error: RMS=0.0203737, max=0.0242209 (Link2_Marker_1)
+Frame 2 (t=0.969):	total squared error = 0.000298955, marker error: RMS=0.0122261, max=0.0145064 (Link2_Marker_1)
+Frame 3 (t=0.979):	total squared error = 3.37394e-05, marker error: RMS=0.00410728, max=0.00486476 (Link2_Marker_1)
+Frame 4 (t=0.989):	total squared error = 3.17767e-05, marker error: RMS=0.00398602, max=0.00471354 (Link2_Marker_1)
+Frame 5 (t=0.999):	total squared error = 0.000330917, marker error: RMS=0.0128631, max=0.0151877 (Link2_Marker_1)
+InverseKinematicsTool completed 5 frames in 0.011s
+
+Storage: file=Out_IK\two_link_pedal_020_ik.mot (nr=6 nc=4)
