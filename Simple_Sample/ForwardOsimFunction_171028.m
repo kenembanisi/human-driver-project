@@ -1,4 +1,4 @@
-function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
+function [UpdatedStateVals UpdatedExtForces] = ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
 % ----------------------------------------------------------------------- %
 % ForwardOsimFunction_YYMMDD.m
 %
@@ -19,7 +19,7 @@ function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,Extra
 %     s               = ExtraPar.state;
     CentStruct      = ExtraPar.CentSt;
     Control_Func       = ExtraPar.Control;
-    aJointReaction = ExtraPar.JointReact;
+%     aJointReaction = ExtraPar.JointReact;
 
     % Check to see if model state is initialized by checking size
     if(osimModel.getWorkingState().getNY() == 0)
@@ -57,12 +57,12 @@ function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,Extra
     dq_des  = zeros(CentStruct.Number,1);
 
     for ii = 1:CentStruct.Number
-        current_coord = osimModel.getCoordinateSet().get(CentStruct.Cent_cor_name(1,ii));
+        current_coord = osimModel.getCoordinateSet().get(CentStruct.Cent_cor_name{1,ii});
         q(ii)  = current_coord.getValue(s);
         dq(ii) = current_coord.getSpeedValue(s);
         q_des(ii) =  CentStruct.Q_des(1,ii);
         dq_des(ii) =  CentStruct.U_des(1,ii);
-        disp([CentStruct.Cent_cor_name(1,ii) ' val: [' num2str(q(ii)/pi*180.) ']/desired[' num2str(q_des(ii)/pi*180.) '] ']);
+        disp([CentStruct.Cent_cor_name{1,ii} ' val: [' num2str(q(ii)/pi*180.) ']/desired[' num2str(q_des(ii)/pi*180.) '] ']);
     end
 
 %     joint_1 = osimModel.getCoordinateSet().get(CentStruct.Cent_cor_name(1,1));
@@ -165,15 +165,17 @@ function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,Extra
     
     controlTorque_array = MUDot_array + Cq_array - G_array;
     
-    Pointer_Link2 = osimModel.getBodySet().get('Pointer_Link2_Marker_1');
-    Pointer_Link2_Mob = Pointer_Link2.getMobilizedBodyIndex;
+    Pointer_Target = osimModel.getBodySet().get(CentStruct.TargetPointer);
+    Pointer_Target_Mob = Pointer_Target.getMobilizedBodyIndex;
     MM = Matrix();
-    smss.calcFrameJacobian(s, Pointer_Link2_Mob, Vec3(1,0,0),MM);
+    smss.calcFrameJacobian(s, Pointer_Target_Mob, Vec3(1,0,0),MM);
     MM_array =osimMatrixToArray(MM);
     MM_array_tran = MM_array';
     
+%     controlTorque_array = MUDot_array + Cq_array - G_array - (MM_array_tran*InitStruct.ContactFr)';
+    
     J = Matrix(); 
-    smss.calcStationJacobian(s, Pointer_Link2_Mob, Vec3(0),J);
+    smss.calcStationJacobian(s, Pointer_Target_Mob, Vec3(0),J);
     J_array = osimMatrixToArray(J);
     J_array_tran = J_array';
     
@@ -231,7 +233,7 @@ function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,Extra
     for ii=1:size(Control_Func.time,2)
         if Control_Func.time(ii)>time_start && Control_Func.time(ii)<=time_end
             for jj=1:CentStruct.Number
-                assert(strcmp (Control_Func.name(jj), CentStruct.Cent_act_name(jj)));
+                assert(strcmp (Control_Func.name{1,jj}, CentStruct.Cent_act_name{1,jj}));
                 Control_Func.data(jj, ii) = CentStruct.ContV(jj);
             end
         end
@@ -275,7 +277,7 @@ function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,Extra
        % Get the coordinate set from the model
        CurrentActs = model_act.get(ii-1);
        for jj = 1:size(Control_Func.name,2)
-           if strcmp(CurrentActs.getName(), Control_Func.name(jj))
+           if strcmp(CurrentActs.getName(), Control_Func.name{1,jj})
                for kk=1:size(Control_Func.time,2)
                    PLF.addPoint(Control_Func.time(kk),Control_Func.data(jj,kk));
                end
@@ -385,9 +387,29 @@ function UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,Extra
     
     
     ForceSet = osimModel.getForceSet();
-    Contact1 = ForceSet.get('Contact1');
-    Contact_Forces = Contact1.getRecordValues(s);
-    disp(['contact forces = ' char(Contact_Forces)]);
+    
+    for ii = 1:CentStruct.ContactNumber
+        counter = 1;
+        ContactSet = ForceSet.get(CentStruct.TargetContact{ii});
+        for jj=1:ContactSet.getRecordLabels().getSize
+            if (strfind(ContactSet.getRecordLabels().get(jj-1),CentStruct.TargetBody)>0)
+                UpdatedExtForces(counter) = ContactSet.getRecordValues(s).get(jj-1);
+                counter = counter + 1;
+                if counter>6
+                    break;
+                end
+            end
+        end
+    end
+%     Contact1 = ForceSet.get('Contact1');
+%     Contact_Forces = Contact1.getRecordValues(s);
+    disp_string = sprintf('contact forces on %s = [ ',CentStruct.TargetBody{1});
+    for ii = 1:6
+        disp_string = char([disp_string num2str(UpdatedExtForces(ii)) ', ']);
+    end
+    disp_string = char([disp_string ' ]']);
+    disp(disp_string);
+    disp(' ');
     
     
     simulationManager.delete;

@@ -37,30 +37,24 @@ end
 pause(1);
 
 % Create an OpenSim model from an OSIM file
-Model_In = ['TwoLinkArmModel.osim'];
+Model_In = ['Driver_Leg-20171019.osim'];
 osimModel = Model(Model_In);
-
-fileoutpath = ['Monitor_Model.osim'];
-osimModel.print(fileoutpath);
 
 output_Dir = 'Result';
 
-% Prepare temporary export model file for debug
-fileoutpath = [Model_In(1:end-5),'_Monitor_01.osim'];
-
 
 % Add Analyses to the model: ForceReporter and BodyKinematics 
-aActuation = Actuation(osimModel);
-aBodyKinematics = BodyKinematics(osimModel);
-aForceReporter = ForceReporter(osimModel);
-aJointReaction = JointReaction(osimModel);
-aKinematics = Kinematics(osimModel);
+% aActuation = Actuation(osimModel);
+% aBodyKinematics = BodyKinematics(osimModel);
+% aForceReporter = ForceReporter(osimModel);
+% aJointReaction = JointReaction(osimModel);
+% aKinematics = Kinematics(osimModel);
 aStatesReporter = StatesReporter(osimModel);
-osimModel.addAnalysis(aActuation);
-osimModel.addAnalysis(aBodyKinematics);
-osimModel.addAnalysis(aForceReporter);
-osimModel.addAnalysis(aJointReaction);
-osimModel.addAnalysis(aKinematics);
+% osimModel.addAnalysis(aActuation);
+% osimModel.addAnalysis(aBodyKinematics);
+% osimModel.addAnalysis(aForceReporter);
+% osimModel.addAnalysis(aJointReaction);
+% osimModel.addAnalysis(aKinematics);
 osimModel.addAnalysis(aStatesReporter);
 
 
@@ -70,9 +64,15 @@ osimState = osimModel.initSystem();
 % Get the number of states from the model;
 % in this case the number of controls equals the number of muscles
 
-Num_Cent_Cnt = 2;
+Num_Cent_Cnt = 7;
+Num_Cent_Contacts = 3;
+
 CentStruct = struct();
 CentStruct.Number = Num_Cent_Cnt;
+CentStruct.TargetBody = cell(1, 1);
+CentStruct.TargetPointer = cell(1, 1);
+CentStruct.ContactNumber = Num_Cent_Contacts;
+CentStruct.TargetContact = cell(1, Num_Cent_Contacts);
 CentStruct.Cent_val_name = cell(1, Num_Cent_Cnt);
 CentStruct.Cent_cor_name = cell(1, Num_Cent_Cnt);
 CentStruct.Cent_act_name = cell(1, Num_Cent_Cnt);
@@ -85,17 +85,35 @@ CentStruct.ContV = zeros(1, Num_Cent_Cnt);
 CentStruct.kp = kp * ones(1, Num_Cent_Cnt);
 CentStruct.kv = kv * ones(1, Num_Cent_Cnt);
 
-CentStruct.Cent_cor_name{1,1} = 'joint_1';
-CentStruct.Cent_cor_name{1,2} = 'joint_2';
-CentStruct.Cent_act_name{1,1} = 'joint_1_actuator';
-CentStruct.Cent_act_name{1,2} = 'joint_2_actuator';
+CentStruct.Cent_cor_name{1,1} = 'hip_flexion_r';
+CentStruct.Cent_cor_name{1,2} = 'hip_adduction_r';
+CentStruct.Cent_cor_name{1,3} = 'hip_rotation_r';
+CentStruct.Cent_cor_name{1,4} = 'knee_angle_r';
+CentStruct.Cent_cor_name{1,5} = 'ankle_angle_r';
+CentStruct.Cent_cor_name{1,6} = 'subtalar_angle_r';
+CentStruct.Cent_cor_name{1,7} = 'mtp_angle_r';
+CentStruct.Cent_act_name{1,1} = 'Act-hip_flexion_r';
+CentStruct.Cent_act_name{1,2} = 'Act-hip_adduction_r';
+CentStruct.Cent_act_name{1,3} = 'Act-hip_rotation_r';
+CentStruct.Cent_act_name{1,4} = 'Act-knee_angle_r';
+CentStruct.Cent_act_name{1,5} = 'Act-ankle_angle_r';
+CentStruct.Cent_act_name{1,6} = 'Act-subtalar_angle_r';
+CentStruct.Cent_act_name{1,7} = 'Act-mtp_angle_r';
 
-CentStruct.Q_des(1,1) =  80. * pi / 180.;
+CentStruct.Q_des(1,1) =  84. * pi / 180.;
 CentStruct.U_des(1,1) =  0.0 * pi / 180.;
-CentStruct.Q_des(1,2) = -80. * pi / 180.;
+CentStruct.Q_des(1,2) = -2.12* pi / 180.;
 CentStruct.U_des(1,2) =  0.0 * pi / 180.;
-
-
+CentStruct.Q_des(1,3) =  5.58* pi / 180.;
+CentStruct.U_des(1,3) =  0.0 * pi / 180.;
+CentStruct.Q_des(1,4) = -56. * pi / 180.;
+CentStruct.U_des(1,4) =  0.0 * pi / 180.;
+CentStruct.Q_des(1,5) =  2.94* pi / 180.;
+CentStruct.U_des(1,5) =  0.0 * pi / 180.;
+CentStruct.Q_des(1,6) = -7.89* pi / 180.;
+CentStruct.U_des(1,6) =  0.0 * pi / 180.;
+CentStruct.Q_des(1,7) =  6.12* pi / 180.;
+CentStruct.U_des(1,7) =  0.0 * pi / 180.;
 
 
 for i=1:Num_Cent_Cnt
@@ -106,9 +124,23 @@ for i=1:Num_Cent_Cnt
     Coord.setSpeedValue(osimState, 0.0);
 end
 
-% If I need to change initial joint angles, input values here.
-CentStruct.Q_ini(1,1) = 90. * pi / 180.;
-CentStruct.Q_ini(1,2) = 45. * pi / 180.;
+% % If I need to change initial joint angles, input values here.
+% CentStruct.Q_ini(1,1) = 90. * pi / 180.;
+% CentStruct.Q_ini(1,2) = 45. * pi / 180.;
+CentStruct.Q_ini(1,1) =  83.9* pi / 180.;
+CentStruct.U_ini(1,1) =  0.0 * pi / 180.;
+CentStruct.Q_ini(1,2) =  6.0 * pi / 180.;
+CentStruct.U_ini(1,2) =  0.0 * pi / 180.;
+CentStruct.Q_ini(1,3) =  0.0 * pi / 180.;
+CentStruct.U_ini(1,3) =  0.0 * pi / 180.;
+CentStruct.Q_ini(1,4) = -55. * pi / 180.;
+CentStruct.U_ini(1,4) =  0.0 * pi / 180.;
+CentStruct.Q_ini(1,5) =  5.2 * pi / 180.;
+CentStruct.U_ini(1,5) =  0.0 * pi / 180.;
+CentStruct.Q_ini(1,6) =  0.0 * pi / 180.;
+CentStruct.U_ini(1,6) =  0.0 * pi / 180.;
+CentStruct.Q_ini(1,7) =  0.0 * pi / 180.;
+CentStruct.U_ini(1,7) =  0.0 * pi / 180.;
 
 
 
@@ -129,7 +161,6 @@ for i=1:Num_Cent_Cnt
     end
     Coord.setValue(osimState, 0.0);
     Coord.setSpeedValue(osimState, 0.0);
-    osimState.getQ
 end
 
 % Return initial state variables into osimModel.
@@ -159,7 +190,9 @@ InitStruct.JointSet  = cell(JointSet.getSize,1);
 InitStruct.CoordSet  = cell(CoordSet.getSize,1);
 InitStruct.StateLabl = cell(StateValNames.getSize,1);
 InitStruct.StateVals = zeros(StateValNames.getSize,1);
+InitStruct.ContactFr = zeros(6,1);
 UpdatedStateVals = zeros(StateValNames.getSize,1);
+UpdatedExtForces = zeros(6,1);
 
 for i = 1:StateValNames.getSize
     InitStruct.StateLabl{i,1} = StateValNames.getitem(i-1);
@@ -202,6 +235,14 @@ Num_Target = PedalData.getTimeColumn(Target_Time);
 Pedal_Name = PedalData.getColumnLabels().get(1);
 PedalData.getDataColumn(Pedal_Name,Pedal_Position);
 
+
+
+fileoutpath = ['Monitor_Model.osim'];
+osimModel.print(fileoutpath);
+
+% Prepare temporary export model file for debug
+fileoutpath = [Model_In(1:end-5),'_Monitor_01.osim'];
+
 Frame = 1;
 
 stateStorage = aStatesReporter.getStatesStorage();
@@ -223,18 +264,34 @@ for ii = 2:Num_Target
     Marker_Param.start = System_StartTim;
     Marker_Param.end   = System_End_Time;
     Marker_Param.dir   = 'MarkerData';
-    Marker_Param.file  = sprintf('two_link_pedal_%03d.trc', ii-1);
+    Marker_Param.file  = sprintf('R_Leg_link_pedal_%03d.trc', ii-1);
+
+    if (Marker_Param.pedal >= 0)
+        CentStruct.TargetBody{1} = 'G_Pedal';
+        CentStruct.TargetPointer{1} = 'Pointer_Toe_R01';
+        CentStruct.TargetContact{1,1} = 'GPedalForce_01';
+        CentStruct.TargetContact{1,2} = 'GPedalForce_02';
+        CentStruct.TargetContact{1,3} = 'GPedalForce_03';
+    else
+        CentStruct.TargetBody{1} = 'B_Pedal';
+        CentStruct.TargetPointer{1} = 'Pointer_Toe_R01';
+        CentStruct.TargetContact{1,1} = 'BPedalForce_01';
+        CentStruct.TargetContact{1,2} = 'BPedalForce_02';
+        CentStruct.TargetContact{1,3} = 'BPedalForce_03';
+    end
     
-    Next = CreateMarker_TwoLink(Marker_Param);
+    Next = CreateMarker_RLeg(Marker_Param);
     Frame = Next;
     
     IK_Param.model     = osimModel;
     IK_Param.read_dir  = Marker_Param.dir;
     IK_Param.read_file = Marker_Param.file;
+    IK_Param.setup_dir = 'AnalyzeSetup';
+    IK_Param.setup_file= 'Setup_IK_RLeg_01.xml';
     IK_Param.out_dir   = 'Out_IK';
    
     
-    IK_outfile = RunIK_TwoLink(IK_Param);
+    IK_outfile = RunIK_RLeg(IK_Param);
 
     motfilepath = IK_outfile;
     Des_StoreData = Storage(motfilepath);
@@ -318,11 +375,11 @@ for ii = 2:Num_Target
         params.state  = osimState;
         params.CentSt = CentStruct;
         params.Control = Control_Func;
-        params.JointReact = aJointReaction;
+%         params.JointReact = aJointReaction;
 
         disp(['Cycle [' int2str(i) ']/[' int2str(System_Num_step) '] : Calculating from ' num2str(time_start) ' to ' num2str(time_end)]);
 
-        UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,params,InitStruct);
+        [UpdatedStateVals UpdatedExtForces] = ForwardOsimFunction_171028(time_start,time_end,params,InitStruct);
 
 
         %# Set the initial states of the model
@@ -332,17 +389,14 @@ for ii = 2:Num_Target
         for j = 1:size(InitStruct.StateVals,1) 
             InitStruct.StateVals(j) = UpdatedStateVals(j);
         end
+        
+        for j = 1:6
+            InitStruct.ContactFr(j) = UpdatedExtForces(j);
+        end
 
         % Use last state variables for next step initial states
         AA = stateStorage.getColumnLabels;
         AB = stateStorage.getLastStateVector().getData;
-    %     for k=1:AB.getSize
-    %         for j = 1:size(InitStruct.StateLabl,1)
-    %            if (strcmp(InitStruct.StateLabl{j,1},AA.getitem(k)))
-    %                InitStruct.StateVals(j) = AB.getitem(k-1);
-    %            end
-    %         end
-    %     end
         disp(['state val [' num2str(AB.get(0)/pi*180.) '], [' num2str(AB.get(2)/pi*180.) ']  ' ]);
         disp('');
 
@@ -354,111 +408,7 @@ for ii = 2:Num_Target
     
 end
 
-% motfilepath='Out_IK\two_link_04_ik.mot';
-% Des_StoreData = Storage(motfilepath);
-% 
-% Des_Time = ArrayDouble();
-% Des_Size = Des_StoreData.getTimeColumn (Des_Time);
-% 
-% Des_Time_Vector = Des_Time.getAsVector;
-% 
-% Des_Time_Array = osimVectorToArray(Des_Time_Vector);
-% Des_Data_Array = zeros(size(InitStruct.CoordSet,1),Des_Size);
-% Des_Labl_Array = cell(size(InitStruct.CoordSet,1),1);
-% 
-% for i = 1:size(InitStruct.CoordSet,1)
-%     coordvalue = ArrayDouble();
-%     Des_StoreData.getDataColumn(char(InitStruct.CoordSet{i,1}),coordvalue);
-%     coordvect = coordvalue.getAsVector;
-%     Des_Data_Array(i,:) = osimVectorToArray(coordvect);
-%     Des_Labl_Array{i,1} = char(InitStruct.CoordSet{i,1});
-% end
-% 
-% Des_Labels = Des_StoreData.getColumnLabels;
-% 
-% 
-% 
-% % Parameters to be passed in to the forward function
-% params.model  = osimModel;
-% params.state  = osimState;
-% params.CentSt = CentStruct;
-% params.Control = Control_Func;
-% params.JointReact = aJointReaction;
-% 
-% stateStorage = aStatesReporter.getStatesStorage();
-% 
-% % start a timer
-% tic;
-% 
-% for i = 1:System_Num_step
-%     time_start = System_StartTim + System_timestep * (i-1);
-%     time_end = System_StartTim + System_timestep * (i);
-%     
-%     if Des_Size
-%         j = 0.;
-%         if time_end < Des_Time_Array(1,1)
-%             desTime_adr = 1;
-%         elseif time_end > Des_Time_Array(1,Des_Size)
-%             desTime_adr = Des_Size;
-%         else
-%             desTime_adr = Des_Size;
-%             for j = 1:Des_Size
-%                 if time_end < Des_Time_Array(1,j)
-%                     desTime_adr = j;
-%                     break;
-%                 end
-%             end
-%         end
-%         
-%         for j = 1:CentStruct.Number
-%             for k = 1:size(InitStruct.CoordSet,1)
-%                 if strcmp(CentStruct.Cent_cor_name{1,j},Des_Labl_Array{k,1})
-%                     CentStruct.Q_des(1,j) = Des_Data_Array(k,desTime_adr)/180*pi;
-%                     if desTime_adr > 1
-%                         CentStruct.U_des(1,j) = (Des_Data_Array(k,desTime_adr)-...
-%                             Des_Data_Array(k,desTime_adr-1))/180.*pi/...
-%                             (Des_Time_Array(1,desTime_adr)-Des_Time_Array(1,desTime_adr-1));
-%                     else
-%                         CentStruct.U_des(1,j) = 0.;
-%                     end
-%                     break;
-%                 end
-%             end
-%         end
-%     end
-%     
-%     params.CentSt = CentStruct;
-% 
-%     disp(['Cycle [' int2str(i) ']/[' int2str(System_Num_step) '] : Calculating from ' num2str(time_start) ' to ' num2str(time_end)]);
-% 
-%     UpdatedStateVals = ForwardOsimFunction_171028(time_start,time_end,params,InitStruct);
-% 
-% 
-%     %# Set the initial states of the model
-%     editableCoordSet = osimModel.updCoordinateSet();
-% 
-%     % Arrange the initial guess by nodes and states
-%     for ii = 1:size(InitStruct.StateVals,1) 
-%         InitStruct.StateVals(ii) = UpdatedStateVals(ii);
-%     end
-%     
-%     % Use last state variables for next step initial states
-%     AA = stateStorage.getColumnLabels;
-%     AB = stateStorage.getLastStateVector().getData;
-% %     for k=1:AB.getSize
-% %         for j = 1:size(InitStruct.StateLabl,1)
-% %            if (strcmp(InitStruct.StateLabl{j,1},AA.getitem(k)))
-% %                InitStruct.StateVals(j) = AB.getitem(k-1);
-% %            end
-% %         end
-% %     end
-%     disp(['state val [' num2str(AB.get(0)/pi*180.) '], [' num2str(AB.get(2)/pi*180.) ']  ' ]);
-%     disp('');
-% 
-%     clear AA AB;
-%     
-% end
-% 
+
 
 
 % stop the timer
@@ -476,11 +426,11 @@ bufferstamp = char(datetime,'yy_MM_dd-HH_mm');
 osimModel.printControlStorage(['SimOut_',bufferstamp,'_excitations.sto']);
 
 % Also write out the results of the analyses to storage files
-aActuation.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
-aBodyKinematics.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
-aForceReporter.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
-aJointReaction.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
-aKinematics.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
+% aActuation.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
+% aBodyKinematics.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
+% aForceReporter.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
+% aJointReaction.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
+% aKinematics.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
 aStatesReporter.printResults(['SimOut_',bufferstamp],outputpath,0.01,'.sto');
 aStatesReporter.printResults(['SimOut_',bufferstamp],'.\.',-1,'.sto');
 
@@ -488,14 +438,14 @@ aStatesReporter.printResults(['SimOut_',bufferstamp],'.\.',-1,'.sto');
 
 % Reset the analyses so everything starts fresh for the next
 % call to this function
-aActuation.getForceStorage.reset(0);
-aActuation.getPowerStorage.reset(0);
-aActuation.getSpeedStorage.reset(0);
-aBodyKinematics.getPositionStorage.reset(0);
-aBodyKinematics.getVelocityStorage.reset(0);
-aBodyKinematics.getAccelerationStorage.reset(0);
-aForceReporter.getForceStorage.reset(0);
-aKinematics.getAccelerationStorage.reset(0);
-aKinematics.getPositionStorage.reset(0);
-aKinematics.getVelocityStorage.reset(0);
+% aActuation.getForceStorage.reset(0);
+% aActuation.getPowerStorage.reset(0);
+% aActuation.getSpeedStorage.reset(0);
+% aBodyKinematics.getPositionStorage.reset(0);
+% aBodyKinematics.getVelocityStorage.reset(0);
+% aBodyKinematics.getAccelerationStorage.reset(0);
+% aForceReporter.getForceStorage.reset(0);
+% aKinematics.getAccelerationStorage.reset(0);
+% aKinematics.getPositionStorage.reset(0);
+% aKinematics.getVelocityStorage.reset(0);
 aStatesReporter.getStatesStorage.reset(0);
