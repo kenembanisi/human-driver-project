@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OpenSimDocument Version="30516">
+	<InverseKinematicsTool name="two_link_01">
+		<!--Directory used for writing results.-->
+		<results_directory>../AnalyzeResults</results_directory>
+		<!--Name of the .osim file used to construct a model.-->
+		<model_file>../TwoLinkArmModel.osim</model_file>
+	</InverseKinematicsTool>
+</OpenSimDocument>

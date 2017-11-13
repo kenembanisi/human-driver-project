@@ -1,0 +1,466 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000007fec22997de, pid=14460, tid=11084
+#
+# JRE version: Java(TM) SE Runtime Environment (7.0_80-b15) (build 1.7.0_80-b15)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.80-b11 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# C  [osimJavaJNI.dll+0x297de]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000ec74800):  JavaThread "Thread-104" [_thread_in_native, id=11084, stack(0x0000000015980000,0x0000000015b80000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000000000108
+
+Registers:
+RAX=0x0000000000000001, RBX=0x0000000000000000, RCX=0x0000000000000001, RDX=0x00000000275dd2f8
+RSP=0x0000000015b7d880, RBP=0x000007fec255e358, RSI=0x00000000275dd2f8, RDI=0x0000000000000000
+R8 =0x0000000015b7d8a8, R9 =0x00000000278bcae0, R10=0x0000000002923124, R11=0x000000006e874b50
+R12=0x0000000000000000, R13=0x00000000a915a0f0, R14=0x0000000015b7da08, R15=0x000000000ec74800
+RIP=0x000007fec22997de, EFLAGS=0x0000000000010202
+
+Top of Stack: (sp=0x0000000015b7d880)
+0x0000000015b7d880:   0000000002948a20 000007fec255e358
+0x0000000015b7d890:   00000000275dd2f8 0000000000000000
+0x0000000015b7d8a0:   fffffffffffffffe 000007fec255e358
+0x0000000015b7d8b0:   0000000100000000 00000000ffffffff
+0x0000000015b7d8c0:   0000000000000000 00000000278bcae0
+0x0000000015b7d8d0:   000000000ec749e8 000007fec22aa37c
+0x0000000015b7d8e0:   00000000a915a0f0 0000000015b7d9b8
+0x0000000015b7d8f0:   0000000000000000 0000000014daa490
+0x0000000015b7d900:   fffffffffffffffe 0000000014daa878
+0x0000000015b7d910:   00000000eaa93520 0000000002923150
+0x0000000015b7d920:   000000000ec749e8 00000000a915a0f0
+0x0000000015b7d930:   0000000000000000 0000000015b7dbd0
+0x0000000015b7d940:   00000000275dd2f8 0000000015b7d9e0
+0x0000000015b7d950:   0000000000000000 000000006e9765a2
+0x0000000015b7d960:   00000000eaa93520 000000000000000a
+0x0000000015b7d970:   bfe03bd8309fb5e4 0000000015b7d978 
+
+Instructions: (pc=0x000007fec22997de)
+0x000007fec22997be:   0f 57 c0 f2 0f 11 40 e8 8d 53 01 48 8d 48 d0 e8
+0x000007fec22997ce:   6e 8f fd ff 89 5c 24 30 4c 8d 44 24 28 48 8b d6
+0x000007fec22997de:   48 8b 8f 08 01 00 00 ff 15 cd 35 2c 00 39 9f b8
+0x000007fec22997ee:   03 00 00 7e 2f 44 8b c3 66 66 0f 1f 84 00 00 00 
+
+
+Register to memory mapping:
+
+RAX=0x0000000000000001 is an unknown value
+RBX=0x0000000000000000 is an unknown value
+RCX=0x0000000000000001 is an unknown value
+RDX=0x00000000275dd2f8 is an unknown value
+RSP=0x0000000015b7d880 is pointing into the stack for thread: 0x000000000ec74800
+RBP=0x000007fec255e358 is an unknown value
+RSI=0x00000000275dd2f8 is an unknown value
+RDI=0x0000000000000000 is an unknown value
+R8 =0x0000000015b7d8a8 is pointing into the stack for thread: 0x000000000ec74800
+R9 =0x00000000278bcae0 is an unknown value
+R10=0x0000000002923124 is at code_begin+644 in an Interpreter codelet
+method entry point (kind = native)  [0x0000000002922ea0, 0x0000000002923740]  2208 bytes
+R11=0x000000006e874b50 is an unknown value
+R12=0x0000000000000000 is an unknown value
+R13=0x00000000a915a0f0 is an oop
+{method} 
+ - klass: {other class}
+R14=0x0000000015b7da08 is pointing into the stack for thread: 0x000000000ec74800
+R15=0x000000000ec74800 is a thread
+
+
+Stack: [0x0000000015980000,0x0000000015b80000],  sp=0x0000000015b7d880,  free space=2038k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [osimJavaJNI.dll+0x297de]
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  org.opensim.modeling.opensimModelJNI.AnalysisWrapper_stepSwigExplicitAnalysisWrapper(JLorg/opensim/modeling/AnalysisWrapper;JLorg/opensim/modeling/State;I)I+0
+J 2349 C2 org.opensim.modeling.AnalysisWrapper.step(Lorg/opensim/modeling/State;I)I (42 bytes) @ 0x0000000002d848a8 [0x0000000002d84860+0x48]
+j  org.opensim.modeling.AnalysisWrapperWithTimer.step(Lorg/opensim/modeling/State;I)I+3
+j  org.opensim.view.motions.JavaMotionDisplayerCallback.step(Lorg/opensim/modeling/State;I)I+3
+j  org.opensim.modeling.opensimModelJNI.SwigDirector_AnalysisWrapper_step(Lorg/opensim/modeling/AnalysisWrapper;JI)I+11
+v  ~StubRoutines::call_stub
+j  org.opensim.modeling.opensimModelJNI.InverseKinematicsTool_run(JLorg/opensim/modeling/InverseKinematicsTool;)Z+0
+j  org.opensim.modeling.InverseKinematicsTool.run()Z+5
+j  org.opensim.tracking.IKToolModel$IKToolWorker.construct()Ljava/lang/Object;+7
+j  org.opensim.swingui.SwingWorker$2.run()V+8
+j  java.lang.Thread.run()V+11
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000000ec76000 JavaThread "Timer-36" [_thread_blocked, id=14412, stack(0x0000000017ac0000,0x0000000017cc0000)]
+  0x000000000ec6e800 JavaThread "Timer-35" [_thread_blocked, id=13268, stack(0x00000000178c0000,0x0000000017ac0000)]
+=>0x000000000ec74800 JavaThread "Thread-104" [_thread_in_native, id=11084, stack(0x0000000015980000,0x0000000015b80000)]
+  0x000000000ec75800 JavaThread "Inactive RequestProcessor thread [Was:Explorer Actions/org.netbeans.modules.openide.explorer.ExplorerActionsImpl$ActionStateUpdater]" daemon [_thread_blocked, id=7256, stack(0x000000000e520000,0x000000000e720000)]
+  0x000000000ec78800 JavaThread "Inactive RequestProcessor thread [Was:System clipboard synchronizer/org.netbeans.NbClipboard$GetContents]" daemon [_thread_blocked, id=13904, stack(0x000000000d7a0000,0x000000000d9a0000)]
+  0x000000000ec71000 JavaThread "Swing-Shell" daemon [_thread_blocked, id=8712, stack(0x00000000211d0000,0x00000000213d0000)]
+  0x000000000ec74000 JavaThread "W32 File Monitor" daemon [_thread_in_native, id=13828, stack(0x00000000107e0000,0x00000000109e0000)]
+  0x000000000ec73000 JavaThread "org.python.google.common.base.internal.Finalizer" daemon [_thread_blocked, id=14632, stack(0x000000001a410000,0x000000001a610000)]
+  0x000000000ec71800 JavaThread "Thread-2" daemon [_thread_blocked, id=9900, stack(0x0000000017ec0000,0x00000000180c0000)]
+  0x000000000ec70000 JavaThread "TimerQueue" daemon [_thread_blocked, id=14240, stack(0x00000000176c0000,0x00000000178c0000)]
+  0x000000000ec6f800 JavaThread "File Watcher" daemon [_thread_blocked, id=14780, stack(0x0000000016160000,0x0000000016360000)]
+  0x000000000e9eb000 JavaThread "AWT-EventQueue-0" [_thread_in_native, id=8420, stack(0x00000000105e0000,0x00000000107e0000)]
+  0x000000000e954800 JavaThread "AWT-Windows" daemon [_thread_in_native, id=8248, stack(0x000000000ff00000,0x0000000010100000)]
+  0x000000000e954000 JavaThread "AWT-Shutdown" [_thread_blocked, id=10696, stack(0x000000000fd00000,0x000000000ff00000)]
+  0x000000000e953000 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=13152, stack(0x000000000fb00000,0x000000000fd00000)]
+  0x000000000e91e800 JavaThread "RequestProcessor queue manager" daemon [_thread_blocked, id=7448, stack(0x000000000f900000,0x000000000fb00000)]
+  0x000000000b2bb000 JavaThread "CLI Requests Server" daemon [_thread_in_native, id=2240, stack(0x000000000f300000,0x000000000f500000)]
+  0x000000000b0f9000 JavaThread "Active Reference Queue Daemon" daemon [_thread_blocked, id=10376, stack(0x000000000d210000,0x000000000d410000)]
+  0x000000000afc7800 JavaThread "Service Thread" daemon [_thread_blocked, id=10260, stack(0x000000000ccb0000,0x000000000ceb0000)]
+  0x000000000afb8800 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=14308, stack(0x000000000cab0000,0x000000000ccb0000)]
+  0x000000000afb1800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=14284, stack(0x000000000c8b0000,0x000000000cab0000)]
+  0x000000000afb1000 JavaThread "Attach Listener" daemon [_thread_blocked, id=3012, stack(0x000000000c6b0000,0x000000000c8b0000)]
+  0x000000000afb0000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=13180, stack(0x000000000c4b0000,0x000000000c6b0000)]
+  0x0000000009de7000 JavaThread "Finalizer" daemon [_thread_blocked, id=1644, stack(0x000000000c2b0000,0x000000000c4b0000)]
+  0x0000000009de0800 JavaThread "Reference Handler" daemon [_thread_blocked, id=8648, stack(0x000000000c0b0000,0x000000000c2b0000)]
+  0x0000000002559000 JavaThread "main" [_thread_blocked, id=13704, stack(0x0000000000030000,0x0000000000230000)]
+
+Other Threads:
+  0x0000000009dde000 VMThread [stack: 0x000000000beb0000,0x000000000c0b0000] [id=15124]
+  0x000000000afd0000 WatcherThread [stack: 0x000000000ceb0000,0x000000000d0b0000] [id=14136]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 160256K, used 28420K [0x00000000eaa80000, 0x00000000f6980000, 0x0000000100000000)
+  eden space 134144K, 1% used [0x00000000eaa80000,0x00000000eacc6540,0x00000000f2d80000)
+  from space 26112K, 99% used [0x00000000f2d80000,0x00000000f46fac00,0x00000000f4700000)
+  to   space 30208K, 0% used [0x00000000f4c00000,0x00000000f4c00000,0x00000000f6980000)
+ ParOldGen       total 252928K, used 112751K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 44% used [0x00000000c0000000,0x00000000c6e1bce8,0x00000000cf700000)
+ PSPermGen       total 70144K, used 62477K [0x00000000a8000000, 0x00000000ac480000, 0x00000000c0000000)
+  object space 70144K, 89% used [0x00000000a8000000,0x00000000abd03750,0x00000000ac480000)
+
+Card table byte_map: [0x0000000005910000,0x0000000005be0000] byte_map_base: 0x00000000053d0000
+
+Polling page: 0x00000000025f0000
+
+Code Cache  [0x0000000002910000, 0x0000000002fd0000, 0x0000000005910000)
+ total_blobs=2851 nmethods=2031 adapters=770 free_code_cache=42455Kb largest_free_block=43314880
+
+Compilation events (10 events):
+Event: 9981.609 Thread 0x000000000afb1800 2371             java.awt.geom.AffineTransform::transform (634 bytes)
+Event: 9981.620 Thread 0x000000000afb1800 nmethod 2371 0x0000000002f8f210 code [0x0000000002f8f380, 0x0000000002f903a8]
+Event: 9985.301 Thread 0x000000000afb8800 2372             javax.swing.plaf.basic.BasicTreeUI::drawDashedHorizontalLine (33 bytes)
+Event: 9985.303 Thread 0x000000000afb8800 nmethod 2372 0x0000000002dfeed0 code [0x0000000002dff060, 0x0000000002dff2d0]
+Event: 9988.413 Thread 0x000000000afb1800 2373             java.util.Formatter$FormatSpecifier::mantissa (41 bytes)
+Event: 9988.416 Thread 0x000000000afb1800 nmethod 2373 0x0000000002dfe950 code [0x0000000002dfeaa0, 0x0000000002dfed78]
+Event: 9998.367 Thread 0x000000000afb8800 2374             java.util.regex.Pattern$Branch::match (66 bytes)
+Event: 9998.387 Thread 0x000000000afb8800 nmethod 2374 0x0000000002dc1650 code [0x0000000002dc1860, 0x0000000002dc2ce8]
+Event: 10247.679 Thread 0x000000000afb1800 2376  s          com.sun.java.swing.plaf.windows.XPStyle::getColor (125 bytes)
+Event: 10247.689 Thread 0x000000000afb1800 nmethod 2376 0x0000000002f8be10 code [0x0000000002f8c000, 0x0000000002f8cc10]
+
+GC Heap History (10 events):
+Event: 9514.320 GC heap before
+{Heap before GC invocations=57 (full 17):
+ PSYoungGen      total 160768K, used 151970K [0x00000000eaa80000, 0x00000000f5880000, 0x0000000100000000)
+  eden space 143872K, 100% used [0x00000000eaa80000,0x00000000f3700000,0x00000000f3700000)
+  from space 16896K, 47% used [0x00000000f3700000,0x00000000f3ee8bc8,0x00000000f4780000)
+  to   space 16384K, 0% used [0x00000000f4880000,0x00000000f4880000,0x00000000f5880000)
+ ParOldGen       total 252928K, used 93189K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 36% used [0x00000000c0000000,0x00000000c5b014a0,0x00000000cf700000)
+ PSPermGen       total 71168K, used 62432K [0x00000000a8000000, 0x00000000ac580000, 0x00000000c0000000)
+  object space 71168K, 87% used [0x00000000a8000000,0x00000000abcf83a0,0x00000000ac580000)
+Event: 9514.329 GC heap after
+Heap after GC invocations=57 (full 17):
+ PSYoungGen      total 159744K, used 8870K [0x00000000eaa80000, 0x00000000f5700000, 0x0000000100000000)
+  eden space 144896K, 0% used [0x00000000eaa80000,0x00000000eaa80000,0x00000000f3800000)
+  from space 14848K, 59% used [0x00000000f4880000,0x00000000f5129850,0x00000000f5700000)
+  to   space 15872K, 0% used [0x00000000f3800000,0x00000000f3800000,0x00000000f4780000)
+ ParOldGen       total 252928K, used 93189K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 36% used [0x00000000c0000000,0x00000000c5b014a0,0x00000000cf700000)
+ PSPermGen       total 71168K, used 62432K [0x00000000a8000000, 0x00000000ac580000, 0x00000000c0000000)
+  object space 71168K, 87% used [0x00000000a8000000,0x00000000abcf83a0,0x00000000ac580000)
+}
+Event: 9673.592 GC heap before
+{Heap before GC invocations=58 (full 17):
+ PSYoungGen      total 159744K, used 54122K [0x00000000eaa80000, 0x00000000f5700000, 0x0000000100000000)
+  eden space 144896K, 31% used [0x00000000eaa80000,0x00000000ed6b10b8,0x00000000f3800000)
+  from space 14848K, 59% used [0x00000000f4880000,0x00000000f5129850,0x00000000f5700000)
+  to   space 15872K, 0% used [0x00000000f3800000,0x00000000f3800000,0x00000000f4780000)
+ ParOldGen       total 252928K, used 93189K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 36% used [0x00000000c0000000,0x00000000c5b014a0,0x00000000cf700000)
+ PSPermGen       total 71168K, used 62451K [0x00000000a8000000, 0x00000000ac580000, 0x00000000c0000000)
+  object space 71168K, 87% used [0x00000000a8000000,0x00000000abcfce50,0x00000000ac580000)
+Event: 9673.597 GC heap after
+Heap after GC invocations=58 (full 17):
+ PSYoungGen      total 151552K, used 6553K [0x00000000eaa80000, 0x00000000f5600000, 0x0000000100000000)
+  eden space 144896K, 0% used [0x00000000eaa80000,0x00000000eaa80000,0x00000000f3800000)
+  from space 6656K, 98% used [0x00000000f3800000,0x00000000f3e666e8,0x00000000f3e80000)
+  to   space 15360K, 0% used [0x00000000f4700000,0x00000000f4700000,0x00000000f5600000)
+ ParOldGen       total 252928K, used 93189K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 36% used [0x00000000c0000000,0x00000000c5b014a0,0x00000000cf700000)
+ PSPermGen       total 71168K, used 62451K [0x00000000a8000000, 0x00000000ac580000, 0x00000000c0000000)
+  object space 71168K, 87% used [0x00000000a8000000,0x00000000abcfce50,0x00000000ac580000)
+}
+Event: 9673.597 GC heap before
+{Heap before GC invocations=59 (full 18):
+ PSYoungGen      total 151552K, used 6553K [0x00000000eaa80000, 0x00000000f5600000, 0x0000000100000000)
+  eden space 144896K, 0% used [0x00000000eaa80000,0x00000000eaa80000,0x00000000f3800000)
+  from space 6656K, 98% used [0x00000000f3800000,0x00000000f3e666e8,0x00000000f3e80000)
+  to   space 15360K, 0% used [0x00000000f4700000,0x00000000f4700000,0x00000000f5600000)
+ ParOldGen       total 252928K, used 93189K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 36% used [0x00000000c0000000,0x00000000c5b014a0,0x00000000cf700000)
+ PSPermGen       total 71168K, used 62451K [0x00000000a8000000, 0x00000000ac580000, 0x00000000c0000000)
+  object space 71168K, 87% used [0x00000000a8000000,0x00000000abcfce50,0x00000000ac580000)
+Event: 9673.819 GC heap after
+Heap after GC invocations=59 (full 18):
+ PSYoungGen      total 151552K, used 0K [0x00000000eaa80000, 0x00000000f5600000, 0x0000000100000000)
+  eden space 144896K, 0% used [0x00000000eaa80000,0x00000000eaa80000,0x00000000f3800000)
+  from space 6656K, 0% used [0x00000000f3800000,0x00000000f3800000,0x00000000f3e80000)
+  to   space 15360K, 0% used [0x00000000f4700000,0x00000000f4700000,0x00000000f5600000)
+ ParOldGen       total 252928K, used 89553K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 35% used [0x00000000c0000000,0x00000000c5774700,0x00000000cf700000)
+ PSPermGen       total 70144K, used 62438K [0x00000000a8000000, 0x00000000ac480000, 0x00000000c0000000)
+  object space 70144K, 89% used [0x00000000a8000000,0x00000000abcf9880,0x00000000ac480000)
+}
+Event: 9905.497 GC heap before
+{Heap before GC invocations=60 (full 18):
+ PSYoungGen      total 151552K, used 144896K [0x00000000eaa80000, 0x00000000f5600000, 0x0000000100000000)
+  eden space 144896K, 100% used [0x00000000eaa80000,0x00000000f3800000,0x00000000f3800000)
+  from space 6656K, 0% used [0x00000000f3800000,0x00000000f3800000,0x00000000f3e80000)
+  to   space 15360K, 0% used [0x00000000f4700000,0x00000000f4700000,0x00000000f5600000)
+ ParOldGen       total 252928K, used 89553K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 35% used [0x00000000c0000000,0x00000000c5774700,0x00000000cf700000)
+ PSPermGen       total 70144K, used 62464K [0x00000000a8000000, 0x00000000ac480000, 0x00000000c0000000)
+  object space 70144K, 89% used [0x00000000a8000000,0x00000000abd002f0,0x00000000ac480000)
+Event: 9905.507 GC heap after
+Heap after GC invocations=60 (full 18):
+ PSYoungGen      total 149504K, used 15354K [0x00000000eaa80000, 0x00000000f6c00000, 0x0000000100000000)
+  eden space 134144K, 0% used [0x00000000eaa80000,0x00000000eaa80000,0x00000000f2d80000)
+  from space 15360K, 99% used [0x00000000f4700000,0x00000000f55fe9c0,0x00000000f5600000)
+  to   space 26112K, 0% used [0x00000000f2d80000,0x00000000f2d80000,0x00000000f4700000)
+ ParOldGen       total 252928K, used 112479K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 44% used [0x00000000c0000000,0x00000000c6dd7ce8,0x00000000cf700000)
+ PSPermGen       total 70144K, used 62464K [0x00000000a8000000, 0x00000000ac480000, 0x00000000c0000000)
+  object space 70144K, 89% used [0x00000000a8000000,0x00000000abd002f0,0x00000000ac480000)
+}
+Event: 10247.725 GC heap before
+{Heap before GC invocations=61 (full 18):
+ PSYoungGen      total 149504K, used 149498K [0x00000000eaa80000, 0x00000000f6c00000, 0x0000000100000000)
+  eden space 134144K, 100% used [0x00000000eaa80000,0x00000000f2d80000,0x00000000f2d80000)
+  from space 15360K, 99% used [0x00000000f4700000,0x00000000f55fe9c0,0x00000000f5600000)
+  to   space 26112K, 0% used [0x00000000f2d80000,0x00000000f2d80000,0x00000000f4700000)
+ ParOldGen       total 252928K, used 112479K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 44% used [0x00000000c0000000,0x00000000c6dd7ce8,0x00000000cf700000)
+ PSPermGen       total 70144K, used 62474K [0x00000000a8000000, 0x00000000ac480000, 0x00000000c0000000)
+  object space 70144K, 89% used [0x00000000a8000000,0x00000000abd02b90,0x00000000ac480000)
+Event: 10247.735 GC heap after
+Heap after GC invocations=61 (full 18):
+ PSYoungGen      total 160256K, used 26091K [0x00000000eaa80000, 0x00000000f6980000, 0x0000000100000000)
+  eden space 134144K, 0% used [0x00000000eaa80000,0x00000000eaa80000,0x00000000f2d80000)
+  from space 26112K, 99% used [0x00000000f2d80000,0x00000000f46fac00,0x00000000f4700000)
+  to   space 30208K, 0% used [0x00000000f4c00000,0x00000000f4c00000,0x00000000f6980000)
+ ParOldGen       total 252928K, used 112751K [0x00000000c0000000, 0x00000000cf700000, 0x00000000eaa80000)
+  object space 252928K, 44% used [0x00000000c0000000,0x00000000c6e1bce8,0x00000000cf700000)
+ PSPermGen       total 70144K, used 62474K [0x00000000a8000000, 0x00000000ac480000, 0x00000000c0000000)
+  object space 70144K, 89% used [0x00000000a8000000,0x00000000abd02b90,0x00000000ac480000)
+}
+
+Deoptimization events (10 events):
+Event: 9683.718 Thread 0x000000000e9eb000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002ee72f4 method=org.jdesktop.layout.Baseline.getBaselineResizeBehaviorUsingMustang(Ljavax/swing/JComponent;)I @ 13
+Event: 9683.752 Thread 0x000000000e9eb000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002d490d8 method=com.sun.java.swing.plaf.windows.XPStyle.getColor(Lcom/sun/java/swing/plaf/windows/XPStyle$Skin;Lcom/sun/java/swing/plaf/windows/TMSchema$Prop;Ljava/awt/Color;)Ljava/awt/Color;0ешо!Г@
+Event: 9795.867 Thread 0x000000000e954800 Uncommon trap: reason=predicate action=maybe_recompile pc=0x0000000002e8728c method=java.awt.datatransfer.MimeTypeParameterList.parse(Ljava/lang/String;)V @ 71
+Event: 9904.807 Thread 0x000000000ec75800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002f1161c method=java.util.concurrent.FutureTask.awaitDone(ZJ)I @ 70
+Event: 9904.816 Thread 0x000000000e954800 Uncommon trap: reason=array_check action=maybe_recompile pc=0x0000000002f3b1e8 method=java.util.ComparableTimSort.mergeLo(IIII)V @ 77
+Event: 9904.816 Thread 0x000000000e954800 Uncommon trap: reason=array_check action=maybe_recompile pc=0x0000000002f3b1e8 method=java.util.ComparableTimSort.mergeLo(IIII)V @ 77
+Event: 9985.243 Thread 0x000000000ec74000 Uncommon trap: reason=null_check action=make_not_entrant pc=0x0000000002dceef8 method=com.sun.jna.DefaultTypeMapper.lookupConverter(Ljava/lang/Class;Ljava/util/List;)Ljava/lang/Object; @ 33
+Event: 10247.740 Thread 0x000000000ec74800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002f34134 method=java.util.regex.Pattern$BmpCharProperty.match(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z @ 34
+Event: 10247.740 Thread 0x000000000ec74800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x0000000002dc2750 method=java.util.regex.Pattern$Branch.match(Ljava/util/regex/Matcher;ILjava/lang/CharSequence;)Z @ 9
+Event: 10247.740 Thread 0x000000000ec74800 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00000000029bfa98 method=java.util.logging.Logger.log(Ljava/util/logging/Level;Ljava/lang/String;Ljava/lang/Object;)V @ 8
+
+Internal exceptions (10 events):
+Event: 9321.085 Thread 0x000000000e9eb000 Threw 0x00000000f1b18d48 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jvm.cpp:1319
+Event: 9321.085 Thread 0x000000000e9eb000 Threw 0x00000000f1b1a5e8 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jvm.cpp:1319
+Event: 9321.085 Thread 0x000000000e9eb000 Threw 0x00000000f1b1d108 at C:\re\jdk7u80\2329\hotspot\src\share\vm\classfile\systemDictionary.cpp:185
+Event: 9677.671 Thread 0x000000000e9eb000 Threw 0x00000000eaf907b8 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:717
+Event: 9795.859 Thread 0x000000000e954800 Threw 0x00000000ee6bff78 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:743
+Event: 9821.520 Thread 0x000000000e954800 Threw 0x00000000eeaaabe8 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:743
+Event: 9831.221 Thread 0x000000000e954800 Threw 0x00000000eeaad648 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:743
+Event: 9855.982 Thread 0x000000000e954800 Threw 0x00000000eeab0098 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:743
+Event: 9889.773 Thread 0x000000000e954800 Threw 0x00000000f25804a8 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:743
+Event: 10217.536 Thread 0x000000000ec74800 Threw 0x00000000f27bf2a8 at C:\re\jdk7u80\2329\hotspot\src\share\vm\prims\jni.cpp:743
+
+Events (10 events):
+Event: 10247.754 Executing VM operation: RevokeBias
+Event: 10247.754 Executing VM operation: RevokeBias done
+Event: 10247.754 Executing VM operation: RevokeBias
+Event: 10247.754 Executing VM operation: RevokeBias done
+Event: 10247.754 Executing VM operation: RevokeBias
+Event: 10247.754 Executing VM operation: RevokeBias done
+Event: 10247.754 Executing VM operation: RevokeBias
+Event: 10247.754 Executing VM operation: RevokeBias done
+Event: 10247.754 Executing VM operation: BulkRevokeBias
+Event: 10247.754 Executing VM operation: BulkRevokeBias done
+
+
+Dynamic libraries:
+0x0000000000400000 - 0x000000000053d000 	C:\OpenSim 3.3\bin\opensim64.exe
+0x0000000077c30000 - 0x0000000077dda000 	C:\windows\SYSTEM32\ntdll.dll
+0x0000000077b10000 - 0x0000000077c2f000 	C:\windows\system32\kernel32.dll
+0x000007fefdbe0000 - 0x000007fefdc4a000 	C:\windows\system32\KERNELBASE.dll
+0x000007feffb80000 - 0x000007feffc5b000 	C:\windows\system32\ADVAPI32.dll
+0x000007feff340000 - 0x000007feff3df000 	C:\windows\system32\msvcrt.dll
+0x000007feff750000 - 0x000007feff76f000 	C:\windows\SYSTEM32\sechost.dll
+0x000007feffc60000 - 0x000007feffd8d000 	C:\windows\system32\RPCRT4.dll
+0x000007fefdec0000 - 0x000007fefec4a000 	C:\windows\system32\SHELL32.dll
+0x000007fefdd30000 - 0x000007fefdda1000 	C:\windows\system32\SHLWAPI.dll
+0x000007feffe50000 - 0x000007feffeb7000 	C:\windows\system32\GDI32.dll
+0x0000000077a10000 - 0x0000000077b0a000 	C:\windows\system32\USER32.dll
+0x000007feffe30000 - 0x000007feffe3e000 	C:\windows\system32\LPK.dll
+0x000007feff680000 - 0x000007feff74b000 	C:\windows\system32\USP10.dll
+0x000007feff120000 - 0x000007feff14e000 	C:\windows\system32\IMM32.DLL
+0x000007fefddb0000 - 0x000007fefdeb9000 	C:\windows\system32\MSCTF.dll
+0x000007fefd860000 - 0x000007fefd890000 	C:\windows\system32\nvinitx.dll
+0x000007fefd850000 - 0x000007fefd85c000 	C:\windows\system32\VERSION.dll
+0x0000000075680000 - 0x0000000075686000 	C:\Program Files\NVIDIA Corporation\CoProcManager\detoured.dll
+0x000007fefbf50000 - 0x000007fefbf88000 	C:\Program Files\NVIDIA Corporation\CoProcManager\nvd3d9wrapx.dll
+0x000007feff480000 - 0x000007feff657000 	C:\windows\system32\SETUPAPI.dll
+0x000007fefd940000 - 0x000007fefd976000 	C:\windows\system32\CFGMGR32.dll
+0x000007feffaa0000 - 0x000007feffb7a000 	C:\windows\system32\OLEAUT32.dll
+0x000007fefec50000 - 0x000007fefee4c000 	C:\windows\system32\ole32.dll
+0x000007fefdbb0000 - 0x000007fefdbca000 	C:\windows\system32\DEVOBJ.dll
+0x000007fefbd40000 - 0x000007fefbd64000 	C:\Program Files\NVIDIA Corporation\CoProcManager\nvdxgiwrapx.dll
+0x0000000063c80000 - 0x0000000063dd3000 	C:\OpenSim 3.3\platform\lib\nbexec64.dll
+0x000000006e690000 - 0x000000006ee69000 	C:\OpenSim 3.3\jdk\jre\bin\server\jvm.dll
+0x000007feed250000 - 0x000007feed259000 	C:\windows\system32\WSOCK32.dll
+0x000007fefdce0000 - 0x000007fefdd2d000 	C:\windows\system32\WS2_32.dll
+0x000007feffe40000 - 0x000007feffe48000 	C:\windows\system32\NSI.dll
+0x000007fefb000000 - 0x000007fefb03b000 	C:\windows\system32\WINMM.dll
+0x0000000077df0000 - 0x0000000077df7000 	C:\windows\system32\PSAPI.DLL
+0x000000006af20000 - 0x000000006aff2000 	C:\OpenSim 3.3\bin\MSVCR100.dll
+0x0000000073580000 - 0x000000007358f000 	C:\OpenSim 3.3\jdk\jre\bin\verify.dll
+0x0000000073290000 - 0x00000000732b8000 	C:\OpenSim 3.3\jdk\jre\bin\java.dll
+0x0000000073560000 - 0x0000000073576000 	C:\OpenSim 3.3\jdk\jre\bin\zip.dll
+0x0000000073270000 - 0x000000007328a000 	C:\OpenSim 3.3\jdk\jre\bin\net.dll
+0x000007fefcd70000 - 0x000007fefcdc5000 	C:\windows\system32\mswsock.dll
+0x000007fefcd60000 - 0x000007fefcd67000 	C:\windows\System32\wship6.dll
+0x0000000073250000 - 0x0000000073261000 	C:\OpenSim 3.3\jdk\jre\bin\nio.dll
+0x000007fefad20000 - 0x000007fefad47000 	C:\windows\system32\IPHLPAPI.DLL
+0x000007fefad10000 - 0x000007fefad1b000 	C:\windows\system32\WINNSI.DLL
+0x000007fef9270000 - 0x000007fef9281000 	C:\windows\system32\dhcpcsvc6.DLL
+0x000007fef9320000 - 0x000007fef9338000 	C:\windows\system32\dhcpcsvc.DLL
+0x000000006cb10000 - 0x000000006cca5000 	C:\OpenSim 3.3\jdk\jre\bin\awt.dll
+0x000007fefcdd0000 - 0x000007fefcde8000 	C:\windows\system32\CRYPTSP.dll
+0x000007fefcad0000 - 0x000007fefcb17000 	C:\windows\system32\rsaenh.dll
+0x000007fefdca0000 - 0x000007fefdcbe000 	C:\windows\system32\USERENV.dll
+0x000007fefd920000 - 0x000007fefd92f000 	C:\windows\system32\profapi.dll
+0x000007fefd820000 - 0x000007fefd82f000 	C:\windows\system32\CRYPTBASE.dll
+0x000007fefb420000 - 0x000007fefb438000 	C:\windows\system32\DWMAPI.DLL
+0x000000006aee0000 - 0x000000006af19000 	C:\OpenSim 3.3\jdk\jre\bin\splashscreen.dll
+0x000007fef98f0000 - 0x000007fef9990000 	C:\windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.7601.18837_none_a4d981ff711297b6\COMCTL32.dll
+0x000007fefb810000 - 0x000007fefb866000 	C:\windows\system32\uxtheme.dll
+0x000007feda5c0000 - 0x000007feda7d1000 	C:\Program Files\NVIDIA Corporation\nview\nViewH64.dll
+0x000007fefb240000 - 0x000007fefb26d000 	C:\windows\system32\ntmarta.dll
+0x000007feff2e0000 - 0x000007feff332000 	C:\windows\system32\WLDAP32.dll
+0x0000000050490000 - 0x00000000504d7000 	C:\OpenSim 3.3\jdk\jre\bin\fontmanager.dll
+0x000007feffd90000 - 0x000007feffe29000 	C:\windows\system32\CLBCatQ.DLL
+0x000007feddf60000 - 0x000007fede093000 	C:\windows\system32\ime\imejp10\imjptip.dll
+0x000007fef8430000 - 0x000007fef8484000 	C:\windows\system32\OLEACC.dll
+0x000007fedde70000 - 0x000007feddf56000 	C:\windows\system32\imjp10k.dll
+0x000007fedaa90000 - 0x000007fedab35000 	C:\windows\system32\ime\shared\imetip.dll
+0x000007fede300000 - 0x000007fede30e000 	C:\windows\system32\ime\shared\imecfm.dll
+0x000007fedaa00000 - 0x000007fedaa8a000 	C:\windows\system32\ime\imejp10\imjpapi.dll
+0x000007feddd70000 - 0x000007feddd9d000 	C:\windows\system32\ime\shared\imjkapi.dll
+0x0000000050b00000 - 0x0000000050b41000 	C:\OpenSim 3.3\jdk\jre\bin\t2k.dll
+0x000007fefb040000 - 0x000007fefb055000 	C:\windows\system32\NLAapi.dll
+0x000007fee7140000 - 0x000007fee7155000 	C:\windows\system32\napinsp.dll
+0x000007fee70b0000 - 0x000007fee70c9000 	C:\windows\system32\pnrpnsp.dll
+0x000007fefcbf0000 - 0x000007fefcc4b000 	C:\windows\system32\DNSAPI.dll
+0x000007fee70a0000 - 0x000007fee70ab000 	C:\windows\System32\winrnr.dll
+0x000007fee7070000 - 0x000007fee7080000 	C:\windows\system32\wshbth.dll
+0x000007fef5cd0000 - 0x000007fef5cff000 	C:\Program Files\Common Files\Microsoft Shared\Windows Live\WLIDNSP.DLL
+0x000007fefc1f0000 - 0x000007fefc1f7000 	C:\windows\System32\wshtcpip.dll
+0x000007fef5880000 - 0x000007fef5888000 	C:\windows\system32\rasadhlp.dll
+0x000007fef9480000 - 0x000007fef94d3000 	C:\windows\System32\fwpuclnt.dll
+0x0000000180000000 - 0x0000000180038000 	C:\OpenSim 3.3\platform\modules\lib\amd64\jnidispatch-340.dll
+0x000007fec2270000 - 0x000007fec293d000 	C:\OpenSim 3.3\bin\osimJavaJNI.dll
+0x000007fec49d0000 - 0x000007fec4a94000 	C:\OpenSim 3.3\bin\osimTools.dll
+0x000007fecf480000 - 0x000007fecf4e7000 	C:\OpenSim 3.3\bin\osimAnalyses.dll
+0x000007fec3e50000 - 0x000007fec3f39000 	C:\OpenSim 3.3\bin\osimActuators.dll
+0x000007fec1f60000 - 0x000007fec2266000 	C:\OpenSim 3.3\bin\osimSimulation.dll
+0x000007fec32e0000 - 0x000007fec33d6000 	C:\OpenSim 3.3\bin\osimCommon.dll
+0x000007fec1de0000 - 0x000007fec1f57000 	C:\OpenSim 3.3\bin\OpenSim_SimTKcommon.dll
+0x0000000061780000 - 0x0000000061e02000 	C:\OpenSim 3.3\bin\liblapack.dll
+0x0000000066600000 - 0x000000006669c000 	C:\OpenSim 3.3\bin\libblas.dll
+0x000000006f600000 - 0x000000006fc53000 	C:\OpenSim 3.3\bin\libgfortran-3.dll
+0x000000006cf00000 - 0x000000006d031000 	C:\OpenSim 3.3\bin\libquadmath-0.dll
+0x00000000147e0000 - 0x000000001488d000 	C:\OpenSim 3.3\bin\libgcc_s_sjlj-1.dll
+0x000007fede7d0000 - 0x000007fede7df000 	C:\OpenSim 3.3\bin\pthreadVC2_x64.dll
+0x0000000072a40000 - 0x0000000072ae3000 	C:\windows\WinSxS\amd64_microsoft.vc90.crt_1fc8b3b9a1e18e3b_9.0.30729.6161_none_08e61857a83bc251\MSVCR90.dll
+0x000007fede600000 - 0x000007fede69c000 	C:\windows\system32\MSVCP140.dll
+0x000007fee0e60000 - 0x000007fee0e76000 	C:\windows\system32\VCRUNTIME140.dll
+0x000007fee8540000 - 0x000007fee8544000 	C:\windows\system32\api-ms-win-crt-runtime-l1-1-0.dll
+0x000007fede840000 - 0x000007fede934000 	C:\windows\system32\ucrtbase.DLL
+0x000007fee6aa0000 - 0x000007fee6aa3000 	C:\windows\system32\api-ms-win-core-timezone-l1-1-0.dll
+0x000007fee4bd0000 - 0x000007fee4bd3000 	C:\windows\system32\api-ms-win-core-file-l2-1-0.dll
+0x000007fee4990000 - 0x000007fee4993000 	C:\windows\system32\api-ms-win-core-localization-l1-2-0.dll
+0x000007fefc330000 - 0x000007fefc333000 	C:\windows\system32\api-ms-win-core-synch-l1-2-0.dll
+0x000007fee4690000 - 0x000007fee4693000 	C:\windows\system32\api-ms-win-core-processthreads-l1-1-1.dll
+0x000007fee45c0000 - 0x000007fee45c3000 	C:\windows\system32\api-ms-win-core-file-l1-2-0.dll
+0x000007fee0fc0000 - 0x000007fee0fc4000 	C:\windows\system32\api-ms-win-crt-string-l1-1-0.dll
+0x000007fee0fa0000 - 0x000007fee0fa3000 	C:\windows\system32\api-ms-win-crt-heap-l1-1-0.dll
+0x000007fee0d10000 - 0x000007fee0d14000 	C:\windows\system32\api-ms-win-crt-stdio-l1-1-0.dll
+0x000007fee0d00000 - 0x000007fee0d04000 	C:\windows\system32\api-ms-win-crt-convert-l1-1-0.dll
+0x000007fee0580000 - 0x000007fee0583000 	C:\windows\system32\api-ms-win-crt-locale-l1-1-0.dll
+0x000007fee0570000 - 0x000007fee0575000 	C:\windows\system32\api-ms-win-crt-math-l1-1-0.dll
+0x000007fee0560000 - 0x000007fee0565000 	C:\windows\system32\api-ms-win-crt-multibyte-l1-1-0.dll
+0x000007fee0550000 - 0x000007fee0553000 	C:\windows\system32\api-ms-win-crt-time-l1-1-0.dll
+0x000007fedec80000 - 0x000007fedec83000 	C:\windows\system32\api-ms-win-crt-filesystem-l1-1-0.dll
+0x000007fedec70000 - 0x000007fedec73000 	C:\windows\system32\api-ms-win-crt-environment-l1-1-0.dll
+0x000007fede5f0000 - 0x000007fede5f3000 	C:\windows\system32\api-ms-win-crt-utility-l1-1-0.dll
+0x000007fec1b20000 - 0x000007fec1dd3000 	C:\OpenSim 3.3\bin\OpenSim_SimTKmath.dll
+0x000007fed0750000 - 0x000007fed0786000 	C:\OpenSim 3.3\bin\osimLepton.dll
+0x000007fec18e0000 - 0x000007fec1b1a000 	C:\OpenSim 3.3\bin\OpenSim_SimTKsimbody.dll
+0x000007fee0610000 - 0x000007fee0613000 	C:\windows\system32\api-ms-win-crt-process-l1-1-0.dll
+0x000007fed0e00000 - 0x000007fed0e24000 	C:\OpenSim 3.3\bin\osimSimmFileWriter.dll
+0x000007fec4710000 - 0x000007fec477e000 	C:\OpenSim 3.3\bin\vtkCommonJava.dll
+0x000007fec1690000 - 0x000007fec18d7000 	C:\OpenSim 3.3\bin\vtkCommon.dll
+0x000007fec5660000 - 0x000007fec56a3000 	C:\OpenSim 3.3\bin\vtksys.dll
+0x0000000050000000 - 0x0000000050098000 	C:\OpenSim 3.3\bin\MSVCP100.dll
+0x000007fec3db0000 - 0x000007fec3e50000 	C:\OpenSim 3.3\bin\vtkFilteringJava.dll
+0x000007fec1390000 - 0x000007fec168b000 	C:\OpenSim 3.3\bin\vtkFiltering.dll
+0x000007fec2c70000 - 0x000007fec2cc6000 	C:\OpenSim 3.3\bin\vtkIOJava.dll
+0x000007fec0f60000 - 0x000007fec1383000 	C:\OpenSim 3.3\bin\vtkIO.dll
+0x000007fecf360000 - 0x000007fecf382000 	C:\OpenSim 3.3\bin\vtkDICOMParser.dll
+
+VM Arguments:
+jvm_args: -Xms24m -Xmx1024m -Dsun.java2d.ddoffscreen=false -Dsun.java2d.gdiblit=false -Dsun.java2d.noddraw=true -Duser.language=en -XX:MaxPermSize=384m -Dnetbeans.user.dir=C:\OpenSim 3.3 -Djdk.home=jdk -splash:C:\Users\Kimpara\AppData\Roaming\.opensim\3.3.2017x64\var\cache\splash.png -Dnetbeans.home=C:\OpenSim 3.3\platform -Dnetbeans.user=C:\Users\Kimpara\AppData\Roaming\.opensim\3.3.2017x64 -Dnetbeans.default_userdir_root= -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=C:\Users\Kimpara\AppData\Roaming\.opensim\3.3.2017x64\var\log\heapdump.hprof -Dsun.awt.keepWorkingSetOnMinimize=true -Dnetbeans.dirs=C:\OpenSim 3.3\opensim;C:\OpenSim 3.3\ide exit 
+java_command: <unknown>
+Launcher Type: generic
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.8.0_152
+CLASSPATH=.;
+PATH=C:\opensim-core\bin;C:\Python27\;C:\Python27\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live; C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Lenovo\Touch Fingerprint Software\;C:\Program Files (x86)\Common Files\Lenovo;C:\ProgramData\Lenovo\ReadyApps;C:\Program Files (x86)\Lenovo\Access Connections\;C:\Program Files\MATLAB\R2016b\runtime\win64;C:\Program Files\MATLAB\R2016b\bin;C:\Program Files\WinMerge;C:\Program Files\MATLAB\R2016a\runtime\win64;C:\Program Files\MATLAB\R2016a\bin;C:\Program Files\WinMerge;C:\Program Files (x86)\Windows Live\Shared;C:\MinGW\bin;C:\TDM-GCC-64\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Intel\UCRT\;C:\Program Files\Intel\UCRT\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\EmEditor;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\doxygen\bin;C:/Simbody/bin;C:\windows\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_152\bin;C:\Program Files\CMake\bin;C:\opensim-4a\bin;C:\Users\Kimpara\AppData\Local\Programs\EmEditor;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\opensim-core\bin;C:\opensim-4a\bin;
+USERNAME=hkimpara
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 94 Stepping 3, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 8 (4 cores per cpu, 2 threads per core) family 6 model 94 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, erms, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 16595496k(9213412k free), swap 33189132k(24069136k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (24.80-b11) for windows-amd64 JRE (1.7.0_80-b15), built on Apr 10 2015 11:26:34 by "java_re" with unknown MS VC++:1600
+
+time: Wed Nov 01 11:41:13 2017
+elapsed time: 10247 seconds
+

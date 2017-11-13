@@ -1,0 +1,21 @@
+Velocities
+version=1
+nRows=2
+nColumns=64
+inDegrees=no
+
+This file contains the kinematics (positions and orientations,
+velocities and angular velocities, or accelerations and angular accelerations)
+of the centers of mass of the body segments in model TwoLinkArm.
+
+Body segment orientations are described using body-fixed X-Y-Z Euler angles.
+
+Angular velocities and accelerations are given about the body-local axes.
+
+Units are S.I. units (seconds, meters, Newtons, ...)
+Angles are in degrees.
+
+endheader
+time	link1_X	link1_Y	link1_Z	link1_Ox	link1_Oy	link1_Oz	link2_X	link2_Y	link2_Z	link2_Ox	link2_Oy	link2_Oz	compliantWall_X	compliantWall_Y	compliantWall_Z	compliantWall_Ox	compliantWall_Oy	compliantWall_Oz	Pointer_Link2_Marker_1_X	Pointer_Link2_Marker_1_Y	Pointer_Link2_Marker_1_Z	Pointer_Link2_Marker_1_Ox	Pointer_Link2_Marker_1_Oy	Pointer_Link2_Marker_1_Oz	Pointer_Link2_Marker_2_X	Pointer_Link2_Marker_2_Y	Pointer_Link2_Marker_2_Z	Pointer_Link2_Marker_2_Ox	Pointer_Link2_Marker_2_Oy	Pointer_Link2_Marker_2_Oz	Pointer_Link2_Marker_3_X	Pointer_Link2_Marker_3_Y	Pointer_Link2_Marker_3_Z	Pointer_Link2_Marker_3_Ox	Pointer_Link2_Marker_3_Oy	Pointer_Link2_Marker_3_Oz	Pointer_Link1_Marker_1_X	Pointer_Link1_Marker_1_Y	Pointer_Link1_Marker_1_Z	Pointer_Link1_Marker_1_Ox	Pointer_Link1_Marker_1_Oy	Pointer_Link1_Marker_1_Oz	Pointer_Link1_Marker_2_X	Pointer_Link1_Marker_2_Y	Pointer_Link1_Marker_2_Z	Pointer_Link1_Marker_2_Ox	Pointer_Link1_Marker_2_Oy	Pointer_Link1_Marker_2_Oz	Pointer_Link1_Marker_3_X	Pointer_Link1_Marker_3_Y	Pointer_Link1_Marker_3_Z	Pointer_Link1_Marker_3_Ox	Pointer_Link1_Marker_3_Oy	Pointer_Link1_Marker_3_Oz	Pointer_Wall_X	Pointer_Wall_Y	Pointer_Wall_Z	Pointer_Wall_Ox	Pointer_Wall_Oy	Pointer_Wall_Oz	center_of_mass_X	center_of_mass_Y	center_of_mass_Z
+      0.99800000	     -1.02810165	      0.07027978	      0.00000000	      0.00000000	      0.00000000	    118.08671333	      0.19085772	     -3.10991316	      0.00000000	      0.00000000	      0.00000000	   -369.33794065	     -0.44600161	      0.00000000	      0.00000000	      0.00000000	      0.00000000	      0.00000000	     -0.11930204	     -1.72608981	      0.00000000	      0.00000000	      0.00000000	   -369.33794065	     -0.11930204	     -1.72608981	      0.00000000	      0.00000000	      0.00000000	   -369.33794065	      0.50970857	     -1.58510811	      0.00000000	      0.00000000	      0.00000000	   -369.33794065	     -0.51405083	      0.03513989	      0.00000000	      0.00000000	      0.00000000	    118.08671333	     -0.51405083	      0.03513989	      0.00000000	      0.00000000	      0.00000000	    118.08671333	     -0.52810678	     -0.17048044	      0.00000000	      0.00000000	      0.00000000	    118.08671333	     -0.44600161	      0.00000000	      0.00000000	      0.00000000	      0.00000000	      0.00000000	     -0.57783680	     -0.74233840	      0.00000000
+      1.00800000	    -16.99215969	      1.00930985	      0.00000000	      0.00000000	      0.00000000	   1950.55493530	    -20.98109978	     56.17248351	      0.00000000	      0.00000000	      0.00000000	   6537.52651914	     -1.70807120	      0.00000000	      0.00000000	      0.00000000	      0.00000000	      0.00000000	    -15.48769101	     31.67863893	      0.00000000	      0.00000000	      0.00000000	   6537.52651914	    -15.48769101	     31.67863893	      0.00000000	      0.00000000	      0.00000000	   6537.52651914	    -26.62125672	     29.18163495	      0.00000000	      0.00000000	      0.00000000	   6537.52651914	     -8.49607985	      0.50465493	      0.00000000	      0.00000000	      0.00000000	   1950.55493530	     -8.49607985	      0.50465493	      0.00000000	      0.00000000	      0.00000000	   1950.55493530	     -8.69794182	     -2.89377701	      0.00000000	      0.00000000	      0.00000000	   1950.55493530	     -1.70807120	      0.00000000	      0.00000000	      0.00000000	      0.00000000	      0.00000000	    -14.16837259	     14.54777580	      0.00000000
