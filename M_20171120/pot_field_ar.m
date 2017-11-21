@@ -23,7 +23,7 @@ t0=0;
 tf=infinity; 
 tspan=[t0,tf];
 
-options = odeset('Event',@ar_event);
+options = odeset('Event',@pot_event_ar);
 
 [T,Y] = ode45(@pot_ar,tspan,rob_pos,options);    % TF, Time, ICon, Options
 

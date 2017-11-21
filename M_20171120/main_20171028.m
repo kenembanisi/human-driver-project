@@ -140,6 +140,7 @@ for ii = 2:size(PedalData,2)
     Marker_Param.Sysname = Sys_Name;
     Marker_Param.file  = sprintf('%s_%03d.trc', Sys_Name, ii-1);
     Marker_Param.TargetVar = TargetVar_Struct;
+    Marker_Param.ContForce = sum(UpdatedExtForces.Force);
 
     Next = CreateMarker_RLeg(Marker_Param);
     Frame = Next;

@@ -131,22 +131,59 @@ else
     
 end
 
-Repulsions(2,:) = (osimVec3ToArray(Start_Point)+osimVec3ToArray(Pointer_Target_1))/2;
-ReplParams(2,:) = [0.04 0.02 0.300 0.20];
-
 % Marker_Names{1,1}=char(model.getBodySet().get(TargetVar_Struct.TargetSub_Pointer{i,1}).getName);
-
-AuxData = struct();
-AuxData.NumRep = 3;
-AuxData.RepPos = Repulsions;
-AuxData.RepParams = ReplParams;
-AuxData.StartPos = osimVec3ToArray(Start_Point);
-AuxData.Dest_Pos = osimVec3ToArray(Pointer_Target_1);
-
-[ax ay az at]=motionplan_pedals(AuxData);
 
 NumMarkerPnt = cast( ...
     round(Time_Duration/TimeDuration_IK + 1), 'int16');
+
+Pot_Field = false;
+
+if ( norm( osimVec3ToArray(Start_Point) - osimVec3ToArray(Pointer_Target_1) ) > 0.02 && Marker_Param.ContForce < 1 )
+    Pot_Field = true;
+
+    Rel_Pos = osimVec3ToArray (model.getBodySet.get('Pointer_Gas').getPositionInGround(s))...
+        - osimVec3ToArray (model.getBodySet.get('Pointer_Brake').getPositionInGround(s));
+    
+    if abs(Rel_Pos(3)) > abs(Rel_Pos(2))
+        
+        p1 = osimVec3ToArray(model.getBodySet.get('B_Pedal').findStationLocationInGround(s, Vec3(0.012645, -0.192043, 0.09804 )));
+        p2 = osimVec3ToArray(model.getBodySet.get('G_Pedal').findStationLocationInGround(s, Vec3(-0.087479, -0.092577, -0.042817 )));
+        p3 = osimVec3ToArray(model.getBodySet.get('G_Pedal').findStationLocationInGround(s, Vec3(-0.117882, -0.117135, -0.043032  )));
+        p4 = osimVec3ToArray(model.getBodySet.get('G_Pedal').findStationLocationInGround(s, Vec3(-0.140837, -0.153889, -0.042488 )));
+
+        [CenterP,r] = SphereFitting_3D(p1,p2,p3,p4);
+
+        Repulsions(2,:) = CenterP;
+        ReplParams(2,:) = [r 0.001 0.300 0.20];
+
+    else
+        Mid_Pos = ( osimVec3ToArray (model.getBodySet.get('Pointer_Gas').getPositionInGround(s))...
+            + osimVec3ToArray (model.getBodySet.get('Pointer_Brake').getPositionInGround(s)) ) / 2.;
+        
+        Repulsions(2,1) = Mid_Pos(1)+norm(Rel_Pos)*tan(60/180*pi)/2;
+        Repulsions(2,2) = Mid_Pos(2);
+        Repulsions(2,3) = Mid_Pos(3);
+        ReplParams(2,:) = [norm(Rel_Pos)/1000 0.001 0.001 0.002];
+        ReplParams(1,1) = ReplParams(1,1) * 0.1;
+        ReplParams(3,1) = ReplParams(3,1) * 0.1;
+        ReplParams(1,2) = 0.001;
+        ReplParams(3,4) = ReplParams(3,4) * 0.1;
+        
+    end
+    
+    AuxData = struct();
+    AuxData.NumRep = 3;
+    AuxData.NumTimSteps = cast(NumMarkerPnt,'double');
+    AuxData.RepPos = Repulsions;
+    AuxData.RepParams = ReplParams;
+    AuxData.StartPos = osimVec3ToArray(Start_Point);
+    AuxData.Dest_Pos = osimVec3ToArray(Pointer_Target_1);
+
+
+    [ax ay az at] = PotField3D_pedals(AuxData);
+
+end
+
 
 Reference_Array = zeros(2,4);
 Reference_Array(1,1) = Time_Start; Reference_Array(2,1) = Time_End;
@@ -166,15 +203,25 @@ Marker_Y_Array(1,end) = Reference_Array(2,3);
 Marker_Z_Array(1,1)   = Reference_Array(1,4); 
 Marker_Z_Array(1,end) = Reference_Array(2,4);
 
-for i = 1:cast(NumMarkerPnt,'double') - 2
-    Time_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,1),...
-        Time_Start + TimeDuration_IK * i );
-    Marker_X_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,2),...
-        Time_Start + TimeDuration_IK * i );
-    Marker_Y_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,3),...
-        Time_Start + TimeDuration_IK * i );
-    Marker_Z_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,4),...
-        Time_Start + TimeDuration_IK * i );
+if Pot_Field
+    for i = 1:cast(NumMarkerPnt,'double') - 2
+        Time_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,1),...
+            Time_Start + TimeDuration_IK * i );
+        Marker_X_Array(1,i+1) = ax(i+1);
+        Marker_Y_Array(1,i+1) = ay(i+1);
+        Marker_Z_Array(1,i+1) = az(i+1);
+    end    
+else
+    for i = 1:cast(NumMarkerPnt,'double') - 2
+        Time_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,1),...
+            Time_Start + TimeDuration_IK * i );
+        Marker_X_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,2),...
+            Time_Start + TimeDuration_IK * i );
+        Marker_Y_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,3),...
+            Time_Start + TimeDuration_IK * i );
+        Marker_Z_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,4),...
+            Time_Start + TimeDuration_IK * i );
+    end
 end
 
 for i = 2:M.NumMarkers
