@@ -2808,6 +2808,30 @@
 					<!--Option to compute the dissipation energy due to damping in the CoordinateLimitForce. If true the dissipation power is automatically integrated to provide energy. Default is false.-->
 					<compute_dissipation_energy>false</compute_dissipation_energy>
 				</CoordinateLimitForce>
+				<BushingForce name="RSubtalar_Elast">
+					<!--Flag indicating whether the force is disabled or not. Disabled means that the force is not active in subsequent dynamics realizations.-->
+					<isDisabled>false</isDisabled>
+					<!--One of the two bodies connected by the bushing.-->
+					<body_1>calcn_r</body_1>
+					<!--The other of the two bodies connected by the bushing.-->
+					<body_2>toes_r</body_2>
+					<!--Location of bushing frame on body 1.-->
+					<location_body_1>0.1788 -0.002 0.00108</location_body_1>
+					<!--Orientation of bushing frame in body 1 as x-y-z, body fixed Euler rotations.-->
+					<orientation_body_1>0 0 0</orientation_body_1>
+					<!--Location of bushing frame on body 2.-->
+					<location_body_2>0 0 0</location_body_2>
+					<!--Orientation of bushing frame in body 2 as x-y-z, body fixed Euler rotations.-->
+					<orientation_body_2>0 0 0</orientation_body_2>
+					<!--Stiffness parameters resisting relative rotation (Nm/rad).-->
+					<rotational_stiffness>10.15 10.15 10.15</rotational_stiffness>
+					<!--Stiffness parameters resisting relative translation (N/m).-->
+					<translational_stiffness>0 0 0</translational_stiffness>
+					<!--Damping parameters resisting relative angular velocity. (Nm/(rad/s))-->
+					<rotational_damping>1.015 1.015 1.015</rotational_damping>
+					<!--Damping parameters resisting relative translational velocity. (N/(m/s)-->
+					<translational_damping>0 0 0</translational_damping>
+				</BushingForce>
 				<CoordinateLimitForce name="RMtpLimitTorque">
 					<!--Coordinate (name) to be limited.-->
 					<coordinate>mtp_angle_r</coordinate>

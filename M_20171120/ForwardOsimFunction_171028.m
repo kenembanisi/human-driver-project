@@ -1,4 +1,4 @@
-function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
+function [Output_StateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
 % ----------------------------------------------------------------------- %
 % ForwardOsimFunction_YYMMDD.m
 %
@@ -64,7 +64,7 @@ function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_
         dq(ii) = current_coord.getSpeedValue(s);
         q_des(ii) =  CentStruct.Q_des(1,ii);
         dq_des(ii) =  CentStruct.U_des(1,ii);
-        disp([CentStruct.Cent_cor_name{1,ii} ' val: [' num2str(q(ii)/pi*180.) ']/desired[' num2str(q_des(ii)/pi*180.) '] ']);
+%         disp([CentStruct.Cent_cor_name{1,ii} ' val: [' num2str(q(ii)/pi*180.) ']/desired[' num2str(q_des(ii)/pi*180.) '] ']);
     end
 
     KP = diag(CentStruct.kp(1,1:CentStruct.Number)); 
@@ -215,7 +215,7 @@ function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_
 
     controlTorque = osimVectorFromArray(controlTorque_array);
 
-    disp(['controlTorque: [' num2str(controlTorque_array) ']' ]);
+%     disp(['controlTorque: [' num2str(controlTorque_array) ']' ]);
     
     for jj=1:CentStruct.Number
         CentStruct.ContV(jj) = controlTorque.get(CentStruct.ValAd(1,jj)-1);
@@ -358,7 +358,8 @@ function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_
 
     %# Set the initial states of the model
     CurrentCoordSet = osimModel.getCoordinateSet();
-
+    
+    UpdatedStateVals = zeros(size(InitStruct.StateLabl,1),1);
     % Arrange the initial guess by nodes and states
     for ii = 1:size(InitStruct.StateVals,1) 
         VariableName = char(InitStruct.StateLabl{ii,1});
@@ -374,6 +375,7 @@ function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_
         end
     end
 
+    Output_StateVals = UpdatedStateVals;
     
     smss = osimModel.getMatterSubsystem();
     JointRF = VectorOfSpatialVec();
@@ -382,12 +384,14 @@ function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_
     
     ForceSet = osimModel.getForceSet();
     
+    OutForces = zeros(1,6);
+    
     for ii = 1:CentStruct.ContactNumber
         counter = 1;
         ContactSet = ForceSet.get(CentStruct.TargetContact{Target_address,ii});
         for jj=1:ContactSet.getRecordLabels().getSize
             if (strfind(ContactSet.getRecordLabels().get(jj-1),CentStruct.TargetBody{Target_address,1})>0)
-                UpdatedExtForces.Force(counter) = ContactSet.getRecordValues(s).get(jj-1);
+                OutForces(counter) = ContactSet.getRecordValues(s).get(jj-1);
                 counter = counter + 1;
                 if counter>6
                     break;
@@ -396,15 +400,15 @@ function [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_
         end
     end
     UpdatedExtForces.Target = CentStruct.TargetBody{Target_address,1};
-%     Contact1 = ForceSet.get('Contact1');
-%     Contact_Forces = Contact1.getRecordValues(s);
-    disp_string = sprintf('contact forces on %s = [ ',CentStruct.TargetBody{Target_address,1});
-    for ii = 1:6
-        disp_string = char([disp_string num2str(UpdatedExtForces.Force(ii)) ', ']);
-    end
-    disp_string = char([disp_string ' ]']);
-    disp(disp_string);
-    disp(' ');
+    UpdatedExtForces.Force = OutForces;
+    
+%     disp_string = sprintf('contact forces on %s = [ ',CentStruct.TargetBody{Target_address,1});
+%     for ii = 1:6
+%         disp_string = char([disp_string num2str(UpdatedExtForces.Force(ii)) ', ']);
+%     end
+%     disp_string = char([disp_string ' ]']);
+%     disp(disp_string);
+%     disp(' ');
     
     
     simulationManager.delete;

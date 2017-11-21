@@ -12,10 +12,13 @@
 clearvars
 clear
 
+format long;
+
 % Node and timing information
 System_StartTim  = 0.00;
 System_End_Time  = 000.90;
-System_Frequency = fix(1000.);
+Trajectory_Frequency = round(100.);
+System_Frequency = round(1000.);
 
 if System_Frequency < 1
     System_Frequency = 1.;
@@ -103,8 +106,9 @@ Frame = 1;
 stateStorage = aStatesReporter.getStatesStorage();
 
 UpdatedStateVals = zeros(size(WholeVarStruct.StateLabl,1),1);
-UpdatedExtForces.Target = char([]);
-UpdatedExtForces.Force = zeros(6,1);
+UpdatedExtForces = struct();
+UpdatedExtForces.Target = '';
+UpdatedExtForces.Force = zeros(1,6);
 
 State_Event = 'Move_to_Brake';
 
@@ -115,8 +119,8 @@ tic;
 for ii = 2:size(PedalData,2)
    % osimState.setTime(Target_Time.get(ii-2));
     
-    System_StartTim  = osimState.getTime;
-    System_End_Time  = PedalData(1,ii);
+    System_StartTim  = round(osimState.getTime,4);
+    System_End_Time  = round(PedalData(1,ii),4);
     
     TargetVar_Struct.pedal = PedalData(2,ii);
     if TargetVar_Struct.pedal >= 0
@@ -125,61 +129,47 @@ for ii = 2:size(PedalData,2)
         TargetVar_Struct.Target_current = 'B_Pedal';
     end
 
-    if ~strcmp(UpdatedExtForces.Target,TargetVar_Struct.Target_current)
-        UpdatedExtForces.Force = zeros(6,1);
+    if ~strcmp(WholeVarStruct.ContactBd,TargetVar_Struct.Target_current)
+        WholeVarStruct.ContactFr = zeros(1,6);
     end
     
-    Force_Control = mlhdlc_fsm_mealy(sum(UpdatedExtForces.Force));
+    Force_Control = mlhdlc_fsm_mealy(sum(WholeVarStruct.ContactFr));
     
+    Marker_Param = struct();
     Marker_Param.model = osimModel;
     Marker_Param.state = osimState;
     Marker_Param.frame = Frame;
     Marker_Param.start = System_StartTim;
     Marker_Param.end   = System_End_Time;
+    Marker_Param.freq  = Trajectory_Frequency; 
+    Marker_Param.cycle = round(1/Trajectory_Frequency,5);
     Marker_Param.dir   = 'MarkerData';
     Marker_Param.Sysname = Sys_Name;
     Marker_Param.file  = sprintf('%s_%03d.trc', Sys_Name, ii-1);
     Marker_Param.TargetVar = TargetVar_Struct;
-    Marker_Param.ContForce = sum(UpdatedExtForces.Force);
+    Marker_Param.ContForce = sum(WholeVarStruct.ContactFr);
 
-    Next = CreateMarker_RLeg(Marker_Param);
+    [Des_Trj_TaskSpace,Next] = CreateMarker_RLeg(Marker_Param);
     Frame = Next;
     
+    IK_Param = struct();
     IK_Param.model     = osimModel;
     IK_Param.read_dir  = Marker_Param.dir;
     IK_Param.read_file = Marker_Param.file;
-    IK_Param.setup_dir = 'AnalyzeSetup';
     IK_Param.setup_file= [Sys_Name,'_IK_Setup_Master.xml'];
-    IK_Param.out_dir   = 'Out_IK';
-   
+    IK_Param.WholeVarStruct = WholeVarStruct;
+
     
-    IK_outfile = RunIK_RLeg(IK_Param);
-
-    motfilepath = IK_outfile;
-    Des_StoreData = Storage(motfilepath);
+    [Des_Time,Des_Trj_JntSpace,Des_Trj_JntLabl] = RunIK_RLeg(IK_Param,Marker_Param);
     
-    Des_Time = ArrayDouble();
-    Des_Size = Des_StoreData.getTimeColumn (Des_Time);
+    Des_Size = size(Des_Time,2);
 
-    Des_Time_Vector = Des_Time.getAsVector;
-
-    Des_Time_Array = osimVectorToArray(Des_Time_Vector);
-    Des_Data_Array = zeros(size(WholeVarStruct.CoordSet,1),Des_Size);
-    Des_Labl_Array = cell(size(WholeVarStruct.CoordSet,1),1);
-
-    for i = 1:size(WholeVarStruct.CoordSet,1)
-        coordvalue = ArrayDouble();
-        Des_StoreData.getDataColumn(char(WholeVarStruct.CoordSet{i,1}),coordvalue);
-        coordvect = coordvalue.getAsVector;
-        Des_Data_Array(i,:) = osimVectorToArray(coordvect);
-        Des_Labl_Array{i,1} = char(WholeVarStruct.CoordSet{i,1});
-    end
     
-    
-    System_timestep = 1./System_Frequency;
+    System_timestep = round(1./System_Frequency,5);
 
-    System_Num_step = fix((System_End_Time-System_StartTim)*System_Frequency);
+    System_Num_step = round((System_End_Time-System_StartTim)*System_Frequency);
 
+    disp (['[System]: Time = ' num2str(System_StartTim) '[s] -> ' num2str(System_End_Time) '[s].']);
 
     
     Control_Func.time = zeros(1, System_Num_step*2+1);
@@ -192,46 +182,19 @@ for ii = 2:size(PedalData,2)
     end
     
     
-    Des_Labels = Des_StoreData.getColumnLabels;
+%     Des_Labels = Des_StoreData.getColumnLabels;
 
 
     for i = 1:System_Num_step
         time_start = System_StartTim + System_timestep * (i-1);
         time_end = System_StartTim + System_timestep * (i);
 
-        if Des_Size
-            j = 0.;
-            if time_end < Des_Time_Array(1,1)
-                desTime_adr = 1;
-            elseif time_end > Des_Time_Array(1,Des_Size)
-                desTime_adr = Des_Size;
-            else
-                desTime_adr = Des_Size;
-                for j = 1:Des_Size
-                    if time_end < Des_Time_Array(1,j)
-                        desTime_adr = j;
-                        break;
-                    end
-                end
-            end
-
-            for j = 1:TargetVar_Struct.Number
-                for k = 1:size(WholeVarStruct.CoordSet,1)
-                    if strcmp(TargetVar_Struct.Cent_cor_name{1,j},Des_Labl_Array{k,1})
-                        TargetVar_Struct.Q_des(1,j) = Des_Data_Array(k,desTime_adr)/180*pi;
-                        if desTime_adr > 1
-                            TargetVar_Struct.U_des(1,j) = (Des_Data_Array(k,desTime_adr)-...
-                                Des_Data_Array(k,desTime_adr-1))/180.*pi/...
-                                (Des_Time_Array(1,desTime_adr)-Des_Time_Array(1,desTime_adr-1));
-                        else
-                            TargetVar_Struct.U_des(1,j) = 0.;
-                        end
-                        break;
-                    end
-                end
-            end
-        end
-
+        TargetVar_Struct.P_des = getCurr_DesPoint_TaskSpace(Marker_Param,time_end,Des_Trj_TaskSpace);
+        
+        [TargetVar_Struct.Q_des, TargetVar_Struct.U_des]...
+            = getCurr_DesPoint_JointSpace (Marker_Param,time_end,TargetVar_Struct,WholeVarStruct,Des_Trj_JntSpace,Des_Trj_JntLabl);
+            
+        
         % Parameters to be passed in to the forward function
         params.model  = osimModel;
         params.state  = osimState;
@@ -239,28 +202,28 @@ for ii = 2:size(PedalData,2)
         params.Control = Control_Func;
 %         params.JointReact = aJointReaction;
 
-        disp(['Cycle [' int2str(i) ']/[' int2str(System_Num_step) '] : Calculating from ' num2str(time_start) ' to ' num2str(time_end)]);
+        [qq,rs] = quorem(sym(i),sym(10));
+        rr = double(rs);
+        if rr == 0
+            disp(['Cycle [' int2str(i) ']/[' int2str(System_Num_step) '] : Calculating from ' num2str(time_start) ' to ' num2str(time_end)]);
+        end
 
         [UpdatedStateVals, UpdatedExtForces] = ForwardOsimFunction_171028(time_start,time_end,params,WholeVarStruct);
 
 
-        %# Set the initial states of the model
-        editableCoordSet = osimModel.updCoordinateSet();
-
         % Arrange the initial guess by nodes and states
-        for j = 1:size(WholeVarStruct.StateVals,1) 
-            WholeVarStruct.StateVals(j) = UpdatedStateVals(j);
-        end
+        WholeVarStruct.StateVals = UpdatedStateVals;
         
-        for j = 1:6
-            WholeVarStruct.ContactFr(j) = UpdatedExtForces.Force(j);
-        end
+        WholeVarStruct.ContactBd = UpdatedExtForces.Target;
+        WholeVarStruct.ContactFr = UpdatedExtForces.Force;
 
         % Use last state variables for next step initial states
-        AA = stateStorage.getColumnLabels;
-        AB = stateStorage.getLastStateVector().getData;
-        disp(['state val [' num2str(AB.get(0)/pi*180.) '], [' num2str(AB.get(2)/pi*180.) ']  ' ]);
-        disp('');
+        if rr == 0
+            disp (['Target pedal position = ' num2str(TargetVar_Struct.pedal) '[%]']);
+            disp ([char(WholeVarStruct.StateLabl{1}) ' angle = ' num2str(WholeVarStruct.StateVals(1)/pi*180.) '[deg]' ]);
+            disp ([char(WholeVarStruct.StateLabl{3}) ' angle = ' num2str(WholeVarStruct.StateVals(3)/pi*180.) '[deg]' ]);
+            disp('');
+        end
 
         clear AA AB;
 

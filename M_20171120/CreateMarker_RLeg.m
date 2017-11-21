@@ -1,4 +1,4 @@
-function endFrame = CreateMarker_RLeg(Marker_Param)
+function [Out_EndPoint,endFrame] = CreateMarker_RLeg(Marker_Param)
 % ----------------------------------------------------------------------- %
 % The OpenSim API is a toolkit for musculoskeletal modeling and           %
 % simulation. See http://opensim.stanford.edu and the NOTICE file         %
@@ -43,7 +43,10 @@ markerFile      = Marker_Param.file;
 TargetVar_Struct= Marker_Param.TargetVar;
 PedalPosition   = TargetVar_Struct.pedal;
 
-Time_Duration = Time_End - Time_Start;
+TimeCycle_IK    = Marker_Param.cycle;
+
+Time_Duration = round(Time_End - Time_Start,3);
+
 
 
 % % Get the name of the file for this trial
@@ -86,7 +89,6 @@ end
 fclose(Fid);
 
 
-TimeDuration_IK = 0.01;
 
 Repulsions = zeros(3,3);
 ReplParams = zeros(3,4);
@@ -133,8 +135,9 @@ end
 
 % Marker_Names{1,1}=char(model.getBodySet().get(TargetVar_Struct.TargetSub_Pointer{i,1}).getName);
 
-NumMarkerPnt = cast( ...
-    round(Time_Duration/TimeDuration_IK + 1), 'int16');
+% NumMarkerPnt = cast( ...
+%     round(Time_Duration/TimeDuration_IK + 1), 'int16');
+NumMarkerPnt = round(Time_Duration/TimeCycle_IK + 1);
 
 Pot_Field = false;
 
@@ -173,7 +176,7 @@ if ( norm( osimVec3ToArray(Start_Point) - osimVec3ToArray(Pointer_Target_1) ) > 
     
     AuxData = struct();
     AuxData.NumRep = 3;
-    AuxData.NumTimSteps = cast(NumMarkerPnt,'double');
+    AuxData.NumTimSteps = NumMarkerPnt;
     AuxData.RepPos = Repulsions;
     AuxData.RepParams = ReplParams;
     AuxData.StartPos = osimVec3ToArray(Start_Point);
@@ -204,25 +207,34 @@ Marker_Z_Array(1,1)   = Reference_Array(1,4);
 Marker_Z_Array(1,end) = Reference_Array(2,4);
 
 if Pot_Field
-    for i = 1:cast(NumMarkerPnt,'double') - 2
+    for i = 1:(NumMarkerPnt - 2)
         Time_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,1),...
-            Time_Start + TimeDuration_IK * i );
+            Time_Start + TimeCycle_IK * i );
         Marker_X_Array(1,i+1) = ax(i+1);
         Marker_Y_Array(1,i+1) = ay(i+1);
         Marker_Z_Array(1,i+1) = az(i+1);
     end    
 else
-    for i = 1:cast(NumMarkerPnt,'double') - 2
+    for i = 1:(NumMarkerPnt - 2)
         Time_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,1),...
-            Time_Start + TimeDuration_IK * i );
+            Time_Start + TimeCycle_IK * i );
         Marker_X_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,2),...
-            Time_Start + TimeDuration_IK * i );
+            Time_Start + TimeCycle_IK * i );
         Marker_Y_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,3),...
-            Time_Start + TimeDuration_IK * i );
+            Time_Start + TimeCycle_IK * i );
         Marker_Z_Array(1,i+1) = interp1(Reference_Array(:,1),Reference_Array(:,4),...
-            Time_Start + TimeDuration_IK * i );
+            Time_Start + TimeCycle_IK * i );
     end
 end
+
+EndPoint_in_TaskSpace = zeros(NumMarkerPnt,3);
+for i = 1:NumMarkerPnt
+    EndPoint_in_TaskSpace(i,1) = Marker_X_Array(1,i);
+    EndPoint_in_TaskSpace(i,2) = Marker_Y_Array(1,i);
+    EndPoint_in_TaskSpace(i,3) = Marker_Z_Array(1,i);
+end
+
+Out_EndPoint = EndPoint_in_TaskSpace;
 
 for i = 2:M.NumMarkers
     Reference_Array(1,2:end) = Marker_Init_Data(i,:); 
@@ -236,13 +248,13 @@ for i = 2:M.NumMarkers
     Marker_Z_Array(i,end) = Reference_Array(2,4);
 
 
-    for j = 1:cast(NumMarkerPnt,'double') - 2
+    for j = 1:(NumMarkerPnt - 2)
         Marker_X_Array(i,j+1) = interp1(Reference_Array(:,1),Reference_Array(:,2),...
-            Time_Start + TimeDuration_IK * j );
+            Time_Start + TimeCycle_IK * j );
         Marker_Y_Array(i,j+1) = interp1(Reference_Array(:,1),Reference_Array(:,3),...
-            Time_Start + TimeDuration_IK * j );
+            Time_Start + TimeCycle_IK * j );
         Marker_Z_Array(i,j+1) = interp1(Reference_Array(:,1),Reference_Array(:,4),...
-            Time_Start + TimeDuration_IK * j );
+            Time_Start + TimeCycle_IK * j );
     end
     
 end
@@ -254,7 +266,7 @@ end
 
 fullpath = ([trc_data_folder '\' markerFile]);
 
-Rate = 1/TimeDuration_IK;
+Rate = Marker_Param.freq;
 
 Fid = fopen(fullpath,'wt');
 fw_string = sprintf('PathFileType\t%d\t(X/Y/Z)\t%s\n', 4, markerFile);
@@ -285,7 +297,7 @@ fprintf (Fid,fw_string);
 fw_string = sprintf('\n');
 fprintf (Fid,fw_string);
 
-for j = 1:cast(NumMarkerPnt,'double')
+for j = 1:NumMarkerPnt
     fw_string = sprintf('%d\t%.9f',j - 1 + startFrame, Time_Array(j));
     fprintf (Fid,fw_string);
     for i = 1:M.NumMarkers
@@ -300,7 +312,7 @@ end
 fclose(Fid);
 % Create name of trial from .trc file name
 
-endFrame = startFrame + cast(NumMarkerPnt,'double') - 1;
+endFrame = startFrame + NumMarkerPnt - 1;
 
 end
 
