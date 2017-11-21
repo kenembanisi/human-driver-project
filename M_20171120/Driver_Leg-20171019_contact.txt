@@ -1,0 +1,3 @@
+TargetBody	TargetSwitch	TargetSub_Pointer	TargetDes_Pointer	cont1	cont2	cont3
+G_Pedal	>=0	Pointer_Toe_R01	Pointer_Gas	GPedalForce_01	GPedalForce_02	GPedalForce_03
+B_Pedal	<0	Pointer_Toe_R01	Pointer_Brake	BPedalForce_01	BPedalForce_02	BPedalForce_03

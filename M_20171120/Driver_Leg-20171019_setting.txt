@@ -1,0 +1,8 @@
+Coord	Act	Init_Q	Init_U	Des_Q	Des_U	kp	kv
+hip_flexion_r	Act-hip_flexion_r	83.9	0	84	0	100	2
+hip_adduction_r	Act-hip_adduction_r	6	0	-2.12	0	100	2
+hip_rotation_r	Act-hip_rotation_r	0	0	5.58	0	100	2
+knee_angle_r	Act-knee_angle_r	-55	0	-56	0	100	2
+ankle_angle_r	Act-ankle_angle_r	5.2	0	2.94	0	100	2
+subtalar_angle_r	Act-subtalar_angle_r	0	0	-7.89	0	100	2
+mtp_angle_r	Act-mtp_angle_r	0	0	6.12	0	100	2
