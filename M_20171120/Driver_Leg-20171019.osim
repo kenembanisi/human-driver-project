@@ -1823,9 +1823,9 @@
 					<Joint>
 						<WeldJoint name="Pointer_Toe_R">
 							<!--Name of the parent body to which this joint connects its owner body.-->
-							<parent_body>toes_r</parent_body>
+							<parent_body>calcn_r</parent_body>
 							<!--Location of the joint in the parent body specified in the parent reference frame. Default is (0,0,0).-->
-							<location_in_parent>0.03 -0.03 -0.01</location_in_parent>
+							<location_in_parent>0.2088 -0.032 -0.00892</location_in_parent>
 							<!--Orientation of the joint in the parent body specified in the parent reference frame. Euler XYZ body-fixed rotation angles are used to express the orientation. Default is (0,0,0).-->
 							<orientation_in_parent>0 0 0</orientation_in_parent>
 							<!--Location of the joint in the child body specified in the child reference frame. For SIMM models, this vector is always the zero vector (i.e., the body reference frame coincides with the joint). -->
@@ -2858,9 +2858,9 @@
 			<objects>
 				<Marker name="Marker_toes_r">
 					<!--Body segment in the model on which the marker resides.-->
-					<body>toes_r</body>
+					<body>calcn_r</body>
 					<!--Location of a marker on the body segment.-->
-					<location> 0.03 -0.03 -0.01</location>
+					<location> 0.2088 -0.032 -0.00892</location>
 					<!--Flag (true or false) specifying whether or not a marker should be kept fixed in the marker placement step.  i.e. If false, the marker is allowed to move.-->
 					<fixed>false</fixed>
 				</Marker>
