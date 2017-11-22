@@ -141,7 +141,7 @@ NumMarkerPnt = round(Time_Duration/TimeCycle_IK + 1);
 
 Pot_Field = false;
 
-if ( norm( osimVec3ToArray(Start_Point) - osimVec3ToArray(Pointer_Target_1) ) > 0.02 && Marker_Param.ContForce < 1 )
+if ( norm( osimVec3ToArray(Start_Point) - osimVec3ToArray(Pointer_Target_1) ) > 0.02 && Marker_Param.ContForce < 1 && Marker_Param.Pot_Switch )
     Pot_Field = true;
 
     Rel_Pos = osimVec3ToArray (model.getBodySet.get('Pointer_Gas').getPositionInGround(s))...

@@ -20,6 +20,8 @@ System_End_Time  = 000.90;
 Trajectory_Frequency = round(100.);
 System_Frequency = round(1000.);
 
+PotentialField_Switch = true;
+
 if System_Frequency < 1
     System_Frequency = 1.;
 end
@@ -148,6 +150,7 @@ for ii = 2:size(PedalData,2)
     Marker_Param.file  = sprintf('%s_%03d.trc', Sys_Name, ii-1);
     Marker_Param.TargetVar = TargetVar_Struct;
     Marker_Param.ContForce = sum(WholeVarStruct.ContactFr);
+    Marker_Param.Pot_Switch = PotentialField_Switch; 
 
     [Des_Trj_TaskSpace,Next] = CreateMarker_RLeg(Marker_Param);
     Frame = Next;
@@ -223,6 +226,14 @@ for ii = 2:size(PedalData,2)
             disp ([char(WholeVarStruct.StateLabl{1}) ' angle = ' num2str(WholeVarStruct.StateVals(1)/pi*180.) '[deg]' ]);
             disp ([char(WholeVarStruct.StateLabl{3}) ' angle = ' num2str(WholeVarStruct.StateVals(3)/pi*180.) '[deg]' ]);
             disp('');
+            
+            disp_string = sprintf('contact forces on %s = [ ',WholeVarStruct.ContactBd);
+            for j = 1:6
+                disp_string = char([disp_string num2str(WholeVarStruct.ContactFr(j)) ', ']);
+            end
+            disp_string = char([disp_string ' ]']);
+            disp(disp_string);
+            disp(' ');
         end
 
         clear AA AB;
