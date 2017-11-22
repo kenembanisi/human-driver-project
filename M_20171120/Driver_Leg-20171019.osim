@@ -2824,11 +2824,11 @@
 					<!--Orientation of bushing frame in body 2 as x-y-z, body fixed Euler rotations.-->
 					<orientation_body_2>0 0 0</orientation_body_2>
 					<!--Stiffness parameters resisting relative rotation (Nm/rad).-->
-					<rotational_stiffness>50.15 50.15 50.15</rotational_stiffness>
+					<rotational_stiffness>15.15 15.15 15.15</rotational_stiffness>
 					<!--Stiffness parameters resisting relative translation (N/m).-->
 					<translational_stiffness>0 0 0</translational_stiffness>
 					<!--Damping parameters resisting relative angular velocity. (Nm/(rad/s))-->
-					<rotational_damping> 5.015 5.015 5.015 </rotational_damping>
+					<rotational_damping>1.515 1.515 1.515</rotational_damping>
 					<!--Damping parameters resisting relative translational velocity. (N/(m/s)-->
 					<translational_damping>0 0 0</translational_damping>
 				</BushingForce>
