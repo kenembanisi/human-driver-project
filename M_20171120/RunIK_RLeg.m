@@ -1,4 +1,4 @@
-function [Des_Time_Array,Des_Data_Array,Des_Labl_Array] = RunIK_RLeg(IK_Param,Marker_Param)
+function [Des_Time_Array,Des_Data_Array,Des_Labl_Array] = RunIK_RLeg(Marker_Param,WholeVarStruct)
 % ----------------------------------------------------------------------- %
 % The OpenSim API is a toolkit for musculoskeletal modeling and           %
 % simulation. See http://opensim.stanford.edu and the NOTICE file         %
@@ -31,15 +31,19 @@ function [Des_Time_Array,Des_Data_Array,Des_Labl_Array] = RunIK_RLeg(IK_Param,Ma
 % Pull in the modeling classes straight from the OpenSim distribution
 import org.opensim.modeling.*
 
-    model = IK_Param.model;
-    trc_data_folder = IK_Param.read_dir;
-    markerFile = IK_Param.read_file;
+    TargetVar_Struct = Marker_Param.TargetVar;
+
+    model = TargetVar_Struct.Model;
+
+    Sys_Name = TargetVar_Struct.SysName;
+    trc_data_folder = Marker_Param.dir;
+    markerFile = Marker_Param.file;
     
     results_folder = 'Out_IK';
 
 
 genericSetupPath = 'AnalyzeSetup';
-genericSetupForIK = IK_Param.setup_file;
+genericSetupForIK = [Sys_Name,'_IK_Setup_Master.xml'];
 
 ikTool = InverseKinematicsTool([genericSetupPath '/' genericSetupForIK]);
 
@@ -67,12 +71,13 @@ ikTool.setModel(model);
 name = regexprep(markerFile,'.trc','');
 fullpath = ([trc_data_folder '\' markerFile]);
 
-% Get trc data to determine time range
-markerData = MarkerData(fullpath);
+% % Get trc data to determine time range
+% markerData = MarkerData(fullpath);
 
 % Get initial and intial time 
-initial_time = round(markerData.getStartFrameTime(),3);
-final_time = round(markerData.getLastFrameTime(),3);
+
+initial_time = round(Marker_Param.start,3);
+final_time = round(Marker_Param.end,3);
 
 % Setup the ikTool for this trial
 ikTool.setName(name);
@@ -100,16 +105,16 @@ Des_Size = Des_StoreData.getTimeColumn (Des_Time);
 Des_Time_Vector = Des_Time.getAsVector;
 
 Des_Time_Array = osimVectorToArray(Des_Time_Vector);
-Des_Data_Array = zeros(size(IK_Param.WholeVarStruct.CoordSet,1),Des_Size);
-Des_Labl_Array = cell(size(IK_Param.WholeVarStruct.CoordSet,1),1);
+Des_Data_Array = zeros(size(WholeVarStruct.CoordSet,1),Des_Size);
+Des_Labl_Array = cell(size(WholeVarStruct.CoordSet,1),1);
 
 
-for i = 1:size(IK_Param.WholeVarStruct.CoordSet,1)
+for i = 1:size(WholeVarStruct.CoordSet,1)
     coordvalue = ArrayDouble();
-    Des_StoreData.getDataColumn(char(IK_Param.WholeVarStruct.CoordSet{i,1}),coordvalue);
+    Des_StoreData.getDataColumn(char(WholeVarStruct.CoordSet{i,1}),coordvalue);
     coordvect = coordvalue.getAsVector;
     Des_Data_Array(i,:) = osimVectorToArray(coordvect);
-    Des_Labl_Array{i,1} = char(IK_Param.WholeVarStruct.CoordSet{i,1});
+    Des_Labl_Array{i,1} = char(WholeVarStruct.CoordSet{i,1});
 end
 
 Marker_Num = round((Marker_Param.end-Marker_Param.start)/Marker_Param.cycle+1);

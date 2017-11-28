@@ -1,4 +1,4 @@
-function [Out_EndPoint,endFrame] = CreateMarker_RLeg(Marker_Param)
+function Out_EndPoint = CreateMarker_RLeg(Marker_Param)
 % ----------------------------------------------------------------------- %
 % The OpenSim API is a toolkit for musculoskeletal modeling and           %
 % simulation. See http://opensim.stanford.edu and the NOTICE file         %
@@ -31,22 +31,29 @@ function [Out_EndPoint,endFrame] = CreateMarker_RLeg(Marker_Param)
 % Pull in the modeling classes straight from the OpenSim distribution
 import org.opensim.modeling.*
 
-model           = Marker_Param.model;
-s               = Marker_Param.state;
+TargetVar_Struct= Marker_Param.TargetVar;
 
-startFrame      = Marker_Param.frame;
+model           = TargetVar_Struct.Model;
+s               = TargetVar_Struct.State;
+
 Time_Start      = Marker_Param.start;
 Time_End        = Marker_Param.end;
-trc_data_folder = Marker_Param.dir;
-Sys_Name        = Marker_Param.Sysname;
-markerFile      = Marker_Param.file;
-TargetVar_Struct= Marker_Param.TargetVar;
 PedalPosition   = TargetVar_Struct.pedal;
+
+
+trc_data_folder = Marker_Param.dir;
+Sys_Name        = TargetVar_Struct.SysName;
 
 TimeCycle_IK    = Marker_Param.cycle;
 
 Time_Duration = round(Time_End - Time_Start,3);
 
+persistent startFrame;
+if isempty(startFrame)
+    startFrame = 1;   
+end
+
+    markerFile  = Marker_Param.file;
 
 
 % % Get the name of the file for this trial
@@ -94,11 +101,13 @@ Repulsions = zeros(3,3);
 ReplParams = zeros(3,4);
 
 if PedalPosition >= 0
-    for i = 1:size(TargetVar_Struct.TargetBody,1)
-        if strfind(TargetVar_Struct.TargetBody{i,1},'G_Pedal')
-            break;
-        end
-    end
+%     for i = 1:size(TargetVar_Struct.TargetBody,1)
+%         if strfind(TargetVar_Struct.TargetBody{i,1},'G_Pedal')
+%             break;
+%         end
+%     end
+    i = getTargetCurID(TargetVar_Struct);
+
     Start_Point = model.getBodySet().get(TargetVar_Struct.TargetSub_Pointer{i,1}).getPositionInGround(s);
 
     CurrentCoord = model.getCoordinateSet().get(TargetVar_Struct.Target_RelCoord{i,1});
@@ -113,11 +122,13 @@ if PedalPosition >= 0
     ReplParams(3,:) = [0.138634316821442 0.001 0.045 0.01];
     
 else
-    for i = 1:size(TargetVar_Struct.TargetBody,1)
-        if strfind(TargetVar_Struct.TargetBody{i,1},'B_Pedal')
-            break;
-        end
-    end
+%     for i = 1:size(TargetVar_Struct.TargetBody,1)
+%         if strfind(TargetVar_Struct.TargetBody{i,1},'B_Pedal')
+%             break;
+%         end
+%     end    
+    i = getTargetCurID(TargetVar_Struct);
+
     Start_Point = model.getBodySet().get(TargetVar_Struct.TargetSub_Pointer{i,1}).getPositionInGround(s);
 
     CurrentCoord = model.getCoordinateSet().get(TargetVar_Struct.Target_RelCoord{i,1});
@@ -141,7 +152,7 @@ NumMarkerPnt = round(Time_Duration/TimeCycle_IK + 1);
 
 Pot_Field = false;
 
-if ( norm( osimVec3ToArray(Start_Point) - osimVec3ToArray(Pointer_Target_1) ) > 0.02 && Marker_Param.ContForce < 1 && Marker_Param.Pot_Switch )
+if ( CheckDistVec3(Start_Point,Pointer_Target_1,0.02) && Marker_Param.ContForce < 1 && Marker_Param.Pot_Switch )
     Pot_Field = true;
 
     Rel_Pos = osimVec3ToArray (model.getBodySet.get('Pointer_Gas').getPositionInGround(s))...
@@ -312,7 +323,7 @@ end
 fclose(Fid);
 % Create name of trial from .trc file name
 
-endFrame = startFrame + NumMarkerPnt - 1;
+startFrame = startFrame + NumMarkerPnt - 1;
 
 end
 

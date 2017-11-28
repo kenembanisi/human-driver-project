@@ -1,4 +1,4 @@
-function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunction_171028(time_start,time_end,ExtraPar,InitStruct)
+function [Output_StateVals, Output_ExtForces, Output_Controls] = Forward_InverseCont_171028(time_start,time_end,ExtraPar,InitStruct,Comp_KPs,Comp_KV)
 % ----------------------------------------------------------------------- %
 % ForwardOsimFunction_YYMMDD.m
 %
@@ -17,7 +17,7 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
     % Get reference to the model
     osimModel       = ExtraPar.model;
 %     s               = ExtraPar.state;
-    CentStruct      = ExtraPar.CentSt; % Same as Target_Var
+    TargetVar_Struct      = ExtraPar.CentSt;
     Control_Func       = ExtraPar.Control;
 %     aJointReaction = ExtraPar.JointReact;
 
@@ -50,107 +50,76 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
 
     clear editableCoordSet temp_str str_addr;
 
-%     for ii=1:CentStruct.Number
-%     end
 
-    q       = zeros(CentStruct.Number,1);
-    dq      = zeros(CentStruct.Number,1);
-    q_des   = zeros(CentStruct.Number,1);
-    dq_des  = zeros(CentStruct.Number,1);
-
-    for ii = 1:CentStruct.Number
-        current_coord = osimModel.getCoordinateSet().get(CentStruct.Cent_cor_name{1,ii});
-        q(ii)  = current_coord.getValue(s);
-        dq(ii) = current_coord.getSpeedValue(s);
-        q_des(ii) =  CentStruct.Q_des(1,ii);
-        dq_des(ii) =  CentStruct.U_des(1,ii);
-%         disp([CentStruct.Cent_cor_name{1,ii} ' val: [' num2str(q(ii)/pi*180.) ']/desired[' num2str(q_des(ii)/pi*180.) '] ']);
-    end
-
-    KP = diag(CentStruct.kp(1,1:CentStruct.Number)); 
-    KV = diag(CentStruct.kv(1,1:CentStruct.Number)); % KP = Matrix( 2, 2, 0.0 ); KV = Matrix( 2, 2, 0.0 );
-    
-    controlLaw = zeros(1,CentStruct.Number);
-    
-    controlLaw = (-1. * KP*(q - q_des) - KV*(dq - dq_des))';
-    
-    controlLaw_Full = zeros(1,s.getNU);
-    controlLaw_Vector = Vector(s.getNU(), 0.0);
-    
-    for ii=1:CentStruct.Number
-        controlLaw_Full(1,CentStruct.ValAd(1,ii)) = controlLaw(1,ii);
-        controlLaw_Vector.set(CentStruct.ValAd(1,ii)-1, controlLaw(1,ii));
+    for i = 1:length(TargetVar_Struct.TargetBody)
+        if strcmp(TargetVar_Struct.Target_current,TargetVar_Struct.TargetBody{i})
+            Target_adr = i;
+            break;
+        end
     end
     
-    smss = osimModel.getMatterSubsystem();
-
-    osimModel.realizeVelocity(s);
+    TarSubBD = osimModel.getBodySet().get(TargetVar_Struct.TargetSub_Pointer{Target_adr});
+    position = osimVec3ToArray( TarSubBD.getPositionInGround(s) );
+        
+    KP = eye(3);
+    for i = 1:3
+        KP(i,i) = KP(i,i)*Comp_KPs(i);
+    end
     
-    % Calculate MUDot = M * Udot
-    MUDot = Vector();
-    smss.multiplyByM(s, controlLaw_Vector, MUDot);
+    KV = eye(TargetVar_Struct.Number);
+    dp = zeros(1,TargetVar_Struct.Number);
+    for i = 1:TargetVar_Struct.Number
+%         KV(i,i) = KV(i,i)*TargetVar_Struct.kv(i);
+        KV(i,i) = KV(i,i)*Comp_KV;
+        dp(i) = osimModel.getCoordinateSet().get(TargetVar_Struct.Cent_cor_name{i}).getSpeedValue(s);
+    end 
     
-    M = Matrix(s.getNU(),s.getNU());
-    smss.calcM(s,M);
-    M_array = osimMatrixToArray(M);
-    MUDot_array = (M_array * controlLaw_Full')';
+    control = KP * (TargetVar_Struct.P_des - position)';
 
-	%	_model->getMatterSubsystem().multiplyBySystemJacobianTranspose(s, _model->getGravityForce().getBodyForces(s), g);
+%     disp(['[Distance] : ' num2str(norm(TargetVar_Struct.P_des - position))  ', val: [' num2str(position) ']/desired[' num2str(TargetVar_Struct.P_des) '] ']);
+    
+    JT_array = getStationJacobian(osimModel, s, TarSubBD.getMobilizedBodyIndex);
+    Tau1 = JT_array * control;
+    
+    Tau2 = zeros(length(Tau1),1);
+    Tau2a = KV*dp';
+    
+    for i = 1:TargetVar_Struct.Number
+        Tau2(TargetVar_Struct.ValAd(i)) = Tau2a(i);
+%         disp([TargetVar_Struct.Cent_cor_name{1,i} ' val: [' ...
+%             num2str(osimModel.getCoordinateSet.get(TargetVar_Struct.Cent_cor_name{1,i}).getValue(s)/pi*180.)...
+%             '] and spd: [' num2str(osimModel.getCoordinateSet.get(TargetVar_Struct.Cent_cor_name{1,i}).getSpeedValue(s)/pi*180.)  ']']);
+    end
     
     % Calculate G_vector (Gravity force vector)
     G_vector = Vector(s.getNU(),0.0);
 
-    smss.multiplyBySystemJacobianTranspose (s,...
+    osimModel.getMatterSubsystem().multiplyBySystemJacobianTranspose (s,...
         SimbodyUtils.getGravityForce_getBodyForces ( osimModel, s ), G_vector);
 
-%     GG = SpacialVec(G_vector)
-    % Calculate Cq_vector (Velocity vector)
-    Cq_vector = Vector();
-    Cq_vector2 = Vector();
-    knownUdot = Vector(s.getNU(), 0.0);
-    appliedMobilityForces = Vector();
-    appliedBodyForces = VectorOfSpatialVec();
-    
-    smss.calcResidualForceIgnoringConstraints(s, appliedMobilityForces, appliedBodyForces, ...
-        knownUdot, Cq_vector);
-    
-    G_array = osimVectorToArray(G_vector);
-    Cq_array = osimVectorToArray(Cq_vector);
-    
-    BodyForce_array = Cq_array - G_array;
-    BodyForce_vector = osimVectorFromArray(BodyForce_array);
-    
-    smss.calcResidualForceIgnoringConstraints(s, G_vector, appliedBodyForces, knownUdot, Cq_vector2);
-    
-    knownLambda = Vector();
-    residualMobilityForces = Vector();
-    smss.calcResidualForce(s, BodyForce_vector, appliedBodyForces, ...
-                  controlLaw_Vector, knownLambda, residualMobilityForces);
-    
-    residualMobilityForces_array = osimVectorToArray(residualMobilityForces);
-    
-    % Calculate Joint torques
-                  
-    controlTorque = Vector();
+    G_array = (osimVectorToArray(G_vector))';
 
+    Tau = zeros(TargetVar_Struct.Number,1);
+    for i = 1:TargetVar_Struct.Number
+%         Tau(i) = Tau1(TargetVar_Struct.ValAd(i)) - Tau2a(i) - G_array(TargetVar_Struct.ValAd(i));
+        Tau(i) = + Tau1(TargetVar_Struct.ValAd(i)) - Tau2a(i);
+    end
+  
+    controlTorque_array = Tau';
     
-    assert (size(MUDot_array,2) == size(Cq_array,2));
-    
-%     controlTorque_array = MUDot_array + Cq_array - G_array;
-%     controlTorque_array = residualMobilityForces_array;
-    controlTorque_array = MUDot_array;
-    
-    Target_address = getTargetCurID(CentStruct);
-%     if strfind(CentStruct.Target_current,'G_Pedal')
-%         for i = 1:size(CentStruct.TargetBody,1)
-%             if strfind(CentStruct.TargetBody{i,1},'G_Pedal')
+%     disp(['[torques] : ' num2str(controlTorque_array)]);
+   
+    Target_address = getTargetCurID(TargetVar_Struct);
+%     if strfind(TargetVar_Struct.Target_current,'G_Pedal')
+%         for i = 1:size(TargetVar_Struct.TargetBody,1)
+%             if strfind(TargetVar_Struct.TargetBody{i,1},'G_Pedal')
 %                 Target_address = i;
 %                 break;
 %             end
 %         end
 %     else
-%         for i = 1:size(CentStruct.TargetBody,1)
-%             if strfind(CentStruct.TargetBody{i,1},'B_Pedal')
+%         for i = 1:size(TargetVar_Struct.TargetBody,1)
+%             if strfind(TargetVar_Struct.TargetBody{i,1},'B_Pedal')
 %                 Target_address = i;
 %                 break;
 %             end
@@ -158,58 +127,15 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
 %     end
     
     
-    Pointer_Target = osimModel.getBodySet().get(CentStruct.TargetSub_Pointer{Target_address,1});
-    Pointer_Target_Mob = Pointer_Target.getMobilizedBodyIndex;
-    MM = Matrix();
-    smss.calcFrameJacobian(s, Pointer_Target_Mob, Vec3(1,0,0),MM);
-    MM_array =osimMatrixToArray(MM);
-    MM_array_tran = MM_array';
-    ForceV = [10 0 0];
-    
-%     controlTorque_array = MUDot_array + Cq_array - G_array - (MM_array_tran*InitStruct.ContactFr)';
-    
-    J = Matrix(); 
-    smss.calcStationJacobian(s, Pointer_Target_Mob, Vec3(0),J);
-    J_array = osimMatrixToArray(J);
-    J_array_tran = J_array';
-    
-    MInv_JTcol = Vector();
-    f_GP = zeros(1,3);
-    J_MInv_JT_array = zeros(3,3);
-    
-    for ii=1:3
-        f_GP(ii)=1;
-        JTcol_array = J_array_tran * f_GP';
-        f_GP(ii)=0;
-        
-        JTcol = osimVectorFromArray(JTcol_array');
-        smss.multiplyByMInv(s, JTcol, MInv_JTcol);
-        MInv_JTcol_array = osimVectorToArray(MInv_JTcol);
 
-        J_MInv_JT_array(:,ii) = J_array * MInv_JTcol_array';
-    end
-    J_MInv_JT = osimMatrixFromArray(J_MInv_JT_array);
-    J_Minv_JTInv_array = pinv(J_MInv_JT_array);
-    
-    
 
     
-%     FSS = osimModel.getForceSet();
-%     FSS1 = FSS.get(1);
-%     FSS1.getRecordValues(osimState)
-%     FSS
-%     FSS1.getName
-%     FSS.getSize
-%     FSS.getName
-%     FSS.getName(1)
-%     FSS.get(1).getName    
-
     
-    for ii=1:size(controlTorque_array,2)
-        if controlTorque_array(1,ii)>400.
-            controlTorque_array(1,ii) = 400.;
-        elseif controlTorque_array(1,ii)<-400.
-            controlTorque_array(1,ii) = -400.;
+    for ii=1:length(controlTorque_array)
+        if controlTorque_array(ii)>400.
+            controlTorque_array(ii) = 400.;
+        elseif controlTorque_array(ii)<-400.
+            controlTorque_array(ii) = -400.;
         end
     end
 
@@ -217,18 +143,16 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
 
 %     disp(['controlTorque: [' num2str(controlTorque_array) ']' ]);
     
-    for jj=1:CentStruct.Number
-        CentStruct.ContV(jj) = controlTorque.get(CentStruct.ValAd(1,jj)-1);
+    for jj=1:TargetVar_Struct.Number
+        TargetVar_Struct.ContV(jj) = controlTorque.get(jj-1);
     end
     
-    assert(controlTorque.size() == s.getNU());
-
     
     for ii=1:size(Control_Func.time,2)
         if Control_Func.time(ii)>time_start && Control_Func.time(ii)<=time_end
-            for jj=1:CentStruct.Number
-                assert(strcmp (Control_Func.name{jj,1}, CentStruct.Actuator_name{1,jj}));
-                Control_Func.data(jj, ii) = CentStruct.ContV(jj);
+            for jj=1:TargetVar_Struct.Number
+                assert(strcmp (Control_Func.name{jj,1}, TargetVar_Struct.Actuator_name{1,jj}));
+                Control_Func.data(jj, ii) = TargetVar_Struct.ContV(jj);
             end
         end
     end
@@ -343,10 +267,10 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
 %      q2 = joint_2.getValue(s);
 %     dq2 = joint_2.getSpeedValue(s);
 % 
-%      q1_des =  CentStruct.Q_des(1,1);
-%     dq1_des =  CentStruct.U_des(1,1);
-%      q2_des =  CentStruct.Q_des(1,2);
-%     dq2_des =  CentStruct.U_des(1,2);
+%      q1_des =  TargetVar_Struct.Q_des(1,1);
+%     dq1_des =  TargetVar_Struct.U_des(1,1);
+%      q2_des =  TargetVar_Struct.Q_des(1,2);
+%     dq2_des =  TargetVar_Struct.U_des(1,2);
 %     
 %     disp(['Check Point A']);
 %     disp(['joint1 vl: [' num2str(q1/pi*180.) ']/desired[' num2str(q1_des/pi*180.) '] ']);
@@ -386,11 +310,11 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
     
     OutForces = zeros(1,6);
     
-    for ii = 1:CentStruct.ContactNumber
+    for ii = 1:TargetVar_Struct.ContactNumber
         counter = 1;
-        ContactSet = ForceSet.get(CentStruct.TargetContact{Target_address,ii});
+        ContactSet = ForceSet.get(TargetVar_Struct.TargetContact{Target_address,ii});
         for jj=1:ContactSet.getRecordLabels().getSize
-            if (strfind(ContactSet.getRecordLabels().get(jj-1),CentStruct.TargetBody{Target_address,1})>0)
+            if (strfind(ContactSet.getRecordLabels().get(jj-1),TargetVar_Struct.TargetBody{Target_address,1})>0)
                 OutForces(counter) = ContactSet.getRecordValues(s).get(jj-1);
                 counter = counter + 1;
                 if counter>6
@@ -399,14 +323,13 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
             end
         end
     end
-    Output_ExtForces.Target = CentStruct.TargetBody{Target_address,1};
+    Output_ExtForces.Target = TargetVar_Struct.TargetBody{Target_address,1};
     Output_ExtForces.Force = OutForces;
     
     Output_Controls = Control_Func.data;
-    
-%     disp_string = sprintf('contact forces on %s = [ ',CentStruct.TargetBody{Target_address,1});
+%     disp_string = sprintf('contact forces on %s = [ ',TargetVar_Struct.TargetBody{Target_address,1});
 %     for ii = 1:6
-%         disp_string = char([disp_string num2str(UpdatedExtForces.Force(ii)) ', ']);
+%         disp_string = char([disp_string num2str(Output_ExtForces.Force(ii)) ', ']);
 %     end
 %     disp_string = char([disp_string ' ]']);
 %     disp(disp_string);
@@ -415,5 +338,20 @@ function [Output_StateVals, Output_ExtForces, Output_Controls] = ForwardOsimFunc
     
     simulationManager.delete;
     clear simulationManager;
+    
+end
+
+
+function    Out_Matrix_array = getStationJacobian(osimModel, s, MobilizedBodyIndex)
+
+    % Import the OpenSim modeling classes
+    import org.opensim.modeling.*
+
+    station = Vec3(0);
+    J = Matrix();
+    
+    osimModel.getMatterSubsystem().calcStationJacobian(s, MobilizedBodyIndex, station, J);
+    J_array = osimMatrixToArray(J);
+    Out_Matrix_array = J_array';
     
 end
