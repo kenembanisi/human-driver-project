@@ -1,0 +1,3 @@
+TargetBody	TargetSwitch	TargetSub_Pointer	TargetDes_Pointer	cont1
+G_Pedal	>=0	Pointer_Link2_Marker_1	Pointer_Gas	GPedalForce_01
+B_Pedal	<0	Pointer_Link2_Marker_1	Pointer_Brake	BPedalForce_01
