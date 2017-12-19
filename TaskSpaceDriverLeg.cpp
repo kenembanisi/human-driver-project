@@ -23,7 +23,7 @@ double vecNorm(Vector value) {
 	return norm = sqrt(sum);
 }
 
-// Computes the position of the pedal in the ground frame based on the inputted pedal Angle
+// Computes the position of the pedal in the ground frame based on the inputed pedal Angle
 Vec3 pedalPositioninG(State& s, std::string pedalName, double pedalAng, Model& model) {
 	Vec3 location;
 	Vec3 station(0, 0, 0); // The center of mass of the Pointer_link2
@@ -81,37 +81,38 @@ Vector desPositionTraj(Vector pC, Vector pD, double t0, double tf, double t) {
 	Vector b(6, Real(0));
 	b[0] = */
 
+	/*
 	for (int i = 0; i < 6; i++) {
 		Vector A = a(pC[i], pD[i], t0, tf);
 
 		pos[i] = A[0] + A[1]*t + A(2)*pow(t, 2) + A(3)*pow(t, 3) + A(4)*pow(t, 4) + A(5)*pow(t, 5);
-	}
+	}*/
 	
-	/*pos[0] = pC[0] + (1.25)*(pD[0] - pC[0])*pow(t,3) + (0.9375)*(pC[0] - pD[0])*pow(t, 4) + (0.1875)*(pD[0] - pC[0])*pow(t, 5);
+	pos[0] = pC[0] + (1.25)*(pD[0] - pC[0])*pow(t,3) + (0.9375)*(pC[0] - pD[0])*pow(t, 4) + (0.1875)*(pD[0] - pC[0])*pow(t, 5);
 	pos[1] = pC[1] + (1.25)*(pD[1] - pC[1])*pow(t, 3) + (0.9375)*(pC[1] - pD[1])*pow(t, 4) + (0.1875)*(pD[1] - pC[1])*pow(t, 5);
 	pos[2] = pC[2] + (1.25)*(pD[2] - pC[2])*pow(t, 3) + (0.9375)*(pC[2] - pD[2])*pow(t, 4) + (0.1875)*(pD[2] - pC[2])*pow(t, 5);
 	pos[3] = pC[3] + (1.25)*(pD[3] - pC[3])*pow(t, 3) + (0.9375)*(pC[3] - pD[3])*pow(t, 4) + (0.1875)*(pD[3] - pC[3])*pow(t, 5);
 	pos[4] = pC[4] + (1.25)*(pD[4] - pC[4])*pow(t, 3) + (0.9375)*(pC[4] - pD[4])*pow(t, 4) + (0.1875)*(pD[4] - pC[4])*pow(t, 5);
-	pos[5] = pC[5] + (1.25)*(pD[5] - pC[5])*pow(t, 3) + (0.9375)*(pC[5] - pD[5])*pow(t, 4) + (0.1875)*(pD[5] - pC[5])*pow(t, 5);*/
+	pos[5] = pC[5] + (1.25)*(pD[5] - pC[5])*pow(t, 3) + (0.9375)*(pC[5] - pD[5])*pow(t, 4) + (0.1875)*(pD[5] - pC[5])*pow(t, 5);
 	
 	return pos;
 }
 
 Vector desVelocityTraj(Vector pC, Vector pD, double t0, double tf, double t) {
 	Vector vel(6, Real(0));
-
+	/*
 	for (int i = 0; i < 6; i++) {
 		Vector A = a(pC[i], pD[i], t0, tf);
 
 		vel[i] = A[1] + 2*A(2)*t + 3*A(3)*pow(t, 2) + 4*A(4)*pow(t, 3) + 5*A(5)*pow(t, 4);
 	}
-
-	/*vel[0] = 3 * (1.25)*(pD[0] - pC[0])*pow(t, 2) + 4 * (0.9375)*(pC[0] - pD[0])*pow(t, 3) + 5 * (0.1875)*(pD[0] - pC[0])*pow(t, 4);
+	*/
+	vel[0] = 3 * (1.25)*(pD[0] - pC[0])*pow(t, 2) + 4 * (0.9375)*(pC[0] - pD[0])*pow(t, 3) + 5 * (0.1875)*(pD[0] - pC[0])*pow(t, 4);
 	vel[1] = 3 * (1.25)*(pD[1] - pC[1])*pow(t, 2) + 4 * (0.9375)*(pC[1] - pD[1])*pow(t, 3) + 5 * (0.1875)*(pD[1] - pC[1])*pow(t, 4);
 	vel[2] = 3 * (1.25)*(pD[2] - pC[2])*pow(t, 2) + 4 * (0.9375)*(pC[2] - pD[2])*pow(t, 3) + 5 * (0.1875)*(pD[2] - pC[2])*pow(t, 4);
 	vel[3] = 3 * (1.25)*(pD[3] - pC[3])*pow(t, 2) + 4 * (0.9375)*(pC[3] - pD[3])*pow(t, 3) + 5 * (0.1875)*(pD[3] - pC[3])*pow(t, 4);
 	vel[4] = 3 * (1.25)*(pD[4] - pC[4])*pow(t, 2) + 4 * (0.9375)*(pC[4] - pD[4])*pow(t, 3) + 5 * (0.1875)*(pD[4] - pC[4])*pow(t, 4);
-	vel[5] = 3 * (1.25)*(pD[5] - pC[5])*pow(t, 2) + 4 * (0.9375)*(pC[5] - pD[5])*pow(t, 3) + 5 * (0.1875)*(pD[5] - pC[5])*pow(t, 4);*/
+	vel[5] = 3 * (1.25)*(pD[5] - pC[5])*pow(t, 2) + 4 * (0.9375)*(pC[5] - pD[5])*pow(t, 3) + 5 * (0.1875)*(pD[5] - pC[5])*pow(t, 4);
 
 	return vel;
 }
@@ -119,18 +120,19 @@ Vector desVelocityTraj(Vector pC, Vector pD, double t0, double tf, double t) {
 Vector desAccTraj(Vector pC, Vector pD, double t0, double tf, double t) {
 	Vector acc(6, Real(0));
 
+	/*
 	for (int i = 0; i < 6; i++) {
 		Vector A = a(pC[i], pD[i], t0, tf);
 
 		acc[i] = 2 * A(2) + 6 * A(3)*t + 12 * A(4)*pow(t, 2) + 20 * A(5)*pow(t, 3);
-	}
+	}*/
 
-	/*acc[0] = 6 * (1.25)*(pD[0] - pC[0])*pow(t, 1) + 12 * (0.9375)*(pC[0] - pD[0])*pow(t, 2) + 20 * (0.1875)*(pD[0] - pC[0])*pow(t, 3);
+	acc[0] = 6 * (1.25)*(pD[0] - pC[0])*pow(t, 1) + 12 * (0.9375)*(pC[0] - pD[0])*pow(t, 2) + 20 * (0.1875)*(pD[0] - pC[0])*pow(t, 3);
 	acc[1] = 6 * (1.25)*(pD[1] - pC[1])*pow(t, 1) + 12 * (0.9375)*(pC[1] - pD[1])*pow(t, 2) + 20 * (0.1875)*(pD[1] - pC[1])*pow(t, 3);
 	acc[2] = 6 * (1.25)*(pD[2] - pC[2])*pow(t, 1) + 12 * (0.9375)*(pC[2] - pD[2])*pow(t, 2) + 20 * (0.1875)*(pD[2] - pC[2])*pow(t, 3);
 	acc[3] = 6 * (1.25)*(pD[3] - pC[3])*pow(t, 1) + 12 * (0.9375)*(pC[3] - pD[3])*pow(t, 2) + 20 * (0.1875)*(pD[3] - pC[3])*pow(t, 3);
 	acc[4] = 6 * (1.25)*(pD[4] - pC[4])*pow(t, 1) + 12 * (0.9375)*(pC[4] - pD[4])*pow(t, 2) + 20 * (0.1875)*(pD[4] - pC[4])*pow(t, 3);
-	acc[5] = 6 * (1.25)*(pD[5] - pC[5])*pow(t, 1) + 12 * (0.9375)*(pC[5] - pD[5])*pow(t, 2) + 20 * (0.1875)*(pD[5] - pC[5])*pow(t, 3);*/
+	acc[5] = 6 * (1.25)*(pD[5] - pC[5])*pow(t, 1) + 12 * (0.9375)*(pC[5] - pD[5])*pow(t, 2) + 20 * (0.1875)*(pD[5] - pC[5])*pow(t, 3);
 
 	return acc;
 }
@@ -411,7 +413,7 @@ public:
 		return rpy;
 	}
 
-	Vector PDController2::controlLaw(const State& s, Vector desPosition) const {
+	Vector PDController2::controlLaw(const State& s, Vector desPosition, Vector conforce) const {
 
 		double t = s.getTime();
 		double t0 = getinitTime();
@@ -454,12 +456,23 @@ public:
 		desAp[0] = desA[3]; desAp[1] = desA[4]; desAp[2] = desA[5];
 		desAo[0] = desA[0]; desAo[1] = desA[1]; desAo[2] = desA[2];
 
+		Vector Fp(3, Real(0)), Fo(3, Real(0));
+		
+	//	std::cout << conforce << std::endl;
+
+		for (int i = 0; i < 3; i++) {
+			Fo[i] = conforce[i];
+			Fp[i] = conforce[i + 3];
+		};
 
 		// computes the position control law
-		Vector ap = desAp + KPp * (desPp - actPp) + KVp * (desVp - actVp);
+	//	Vector ap = desAp + KPp * (desPp - actPp) + KVp * (desVp - actVp);  // to implement impedance control, add force term here
+		Vector ap = desAp + KPp * (desPp - actPp) + KVp * (desVp - actVp) - Fp;
 
 		// computes the orientation control law
-		Vector ao = T(actPo) * (desAo + KVo * (desVo - actVo) + KPo * (desPo - actPo)) + Tdot(actPo, actVo) * actVo;
+	//	Vector ao = T(actPo) * (desAo + KVo * (desVo - actVo) + KPo * (desPo - actPo)) + Tdot(actPo, actVo) * actVo; // to implement impedance control, add force * T_transpose term here
+		Matrix Ttrans = T(actPo).transpose();
+		Vector ao = T(actPo) * (desAo + KVo * (desVo - actVo) + KPo * (desPo - actPo) - Ttrans*Fo) + Tdot(actPo, actVo) * actVo;
 
 	//	Vector ax = -KP*(toepointerPose - desPosition) - KV*(toepointerVel);
 
@@ -467,6 +480,8 @@ public:
 		Vector a(6);
 		a[0] = ao[0]; a[1] = ao[1]; a[2] = ao[2];
 		a[3] = ap[0]; a[4] = ap[1]; a[5] = ap[2];
+
+	//	std::cout << "The control law = " << a << std::endl;
 
 		return a;
 	}
@@ -546,9 +561,19 @@ public:
 		return tau;
 	}
 
-	Vector PDController2::impedanceControl(const State& s, Vector desPosition) const {
+	Vector PDController2::impedanceControl(const State& s, Vector desPosition, Vector F) const {
 		
-		Vector alpha = J66Inv(s)*(controlLaw(s, desPosition) - JDotU6(s));
+		Matrix j66I = J66Inv(s);
+
+		//std::cout << "Jacobian = " << j66I << std::endl;
+
+		//Vector inter = controlLaw(s, desPosition) - JDotU6(s);
+
+		//std::cout << "inter = " << inter << std::endl;
+
+		Vector alpha = J66Inv(s)*(controlLaw(s, desPosition, F) - JDotU6(s));
+
+	//	std::cout << "alpha = " << alpha << std::endl;
 
 		Vector tau = Mass66(s)*alpha + C61(s) - G61(s);
 
@@ -612,7 +637,7 @@ public:
 		//		std::cout << val3 << std::endl;
 
 				
-		//		std::cout << frameVelocityinG(s) << std::endl;
+		//		std::cout << "frame Pose: " << framePoseinG(s) << std::endl;
 
 		//		std::cout << "Time is: " << t << "  " << locationOfStationinG(s, 4) << std::endl;
 		//		std::cout << locationOfStationinG(s, 8) << std::endl;
@@ -623,6 +648,7 @@ public:
 		//		const Coordinate& GP = _model->updCoordinateSet().get("G_Pedal_tilt");
 		//		const Coordinate& joint2 = _model->getCoordinateSet().get("joint_2");
 
+		//		std::cout << "Gas pedal angle is: " << GP.getValue(s) << std::endl;
 		//		double j1 = GP.setValue(s, 10 * Pi/180);
 		//		double j1_u = joint1.getSpeedValue(s);
 		//		double j2 = joint2.getValue(s);
@@ -645,26 +671,57 @@ public:
 		desPosition[5] = 0.4037;		*/
 
 		// desired pose for brake pedal location
-		desPosition[0] = -0.3561;
+	/*	desPosition[0] = -0.3561;
 		desPosition[1] = -0.5327;
 		desPosition[2] = 1.1653;
 		desPosition[3] = 0.8903;
 		desPosition[4] = -0.17127;
-		desPosition[5] = 0.01528;
+		desPosition[5] = 0.01528; */
 
-		std::cout << "Pose in ground = " << framePoseinG(s) << std::endl;
-		std::cout << "Error in position = " << framePoseinG(s) - desPosition << std::endl;
+		// Gas pedal at 15 deg
+	/*	desPosition[0] = -0.3561;
+		desPosition[1] = -0.5327;
+		desPosition[2] = 1.1653;
+		desPosition[3] = 0.887;
+		desPosition[4] = -0.228;
+		desPosition[5] = 0.1788;  */
+
+	/*	desPosition[0] = -0.03561;
+		desPosition[1] = -0.09864;
+		desPosition[2] = 0.848;
+		desPosition[3] = 0.8529;
+		desPosition[4] = -0.1717;
+		desPosition[5] = 0.00702; */
+
+		desPosition[0] = -0.01622;
+		desPosition[1] = -0.0932;
+		desPosition[2] = 0.8462;
+		desPosition[3] = 0.8835;
+		desPosition[4] = -0.2208;
+		desPosition[5] = 0.17105;
+
+	//	std::cout << "Pose in ground = " << framePoseinG(s) << std::endl;
+	//	std::cout << "Error in position = " << framePoseinG(s) - desPosition << std::endl;
+
+	//	std::cout << "The current time is: " << t << std::endl;
+	//	std::cout << "Pose in ground = " << framePoseinG(s) << std::endl;
+
 
 		double t0 = getinitTime();
 		double tf = getfinalTime();
 
 
-		controlTorque = impedanceControl(s, desPosition);
+		controlTorque = impedanceControl(s, desPosition, contForce);
 
-		/*if (vecNorm(contForce) > 0)
+
+		/*
+		if (vecNorm(contForce) > 0)
 			controlTorque = stiffnessControl(s, desPosition, 25000, 25000, 1000, 500);
 		else
-			controlTorque = stiffnessControl(s, desPosition, 5000, 5000, 1000, 300);*/
+			controlTorque = stiffnessControl(s, desPosition, 5000, 5000, 1000, 300);
+		*/
+
+	//	std::cout << "the control torque = " << controlTorque << std::endl;
 
 		const Actuator& j1_act = _model->getActuators().get("Act-hip_flexion_r");
 		const Actuator& j2_act = _model->getActuators().get("Act-hip_adduction_r");
@@ -720,8 +777,8 @@ Vector force(const Storage& forcestorage, double finalTime) {
 	forcestorage.getDataAtTime(finalTime, 262, data);
 
 	for (int j = 0; j < 3; j++) {
-		f[j] = data[j + 100 + 3];
-		f[j + 3] = data[j + 100];
+		f[j] = data[j + 96 + 3];
+		f[j + 3] = data[j + 96];
 	}
 
 	return f;
@@ -734,7 +791,7 @@ int main()
 		double System_frequency = 1000.0;
 		double System_timestep = 1.0 / System_frequency;
 		double System_StartTim = 00.00;
-		double System_End_Time = 1.50;
+		double System_End_Time = 4.0;
 		int System_Num_step = (int)round((System_End_Time - System_StartTim) / System_timestep);
 
 		// Create an OpenSim model and set its name
@@ -758,7 +815,7 @@ int main()
 
 		CoordinateSet& modelSet = osimModel.updCoordinateSet();
 
-		/*
+		
 		const Coordinate& hipflex = osimModel.getCoordinateSet().get("hip_flexion_r");
 		const Coordinate& hipadd = osimModel.getCoordinateSet().get("hip_adduction_r");
 		const Coordinate& hiprot = osimModel.getCoordinateSet().get("hip_rotation_r");
@@ -766,16 +823,16 @@ int main()
 		const Coordinate& ankleangle = osimModel.getCoordinateSet().get("ankle_angle_r");
 		const Coordinate& subtalar = osimModel.getCoordinateSet().get("subtalar_angle_r");
 
-		hipflex.setValue(s, 115 * Pi / 180);
-		hipadd.setValue(s, -30 * Pi / 180);
-		hiprot.setValue(s, 5 * Pi / 180);
-		kneeflex.setValue(s, -100 * Pi / 180);
-		ankleangle.setValue(s, 30 * Pi / 180);
-		subtalar.setValue(s, 0 * Pi / 180);
+	/*	hipflex.setValue(s, 80.7 * Pi / 180);
+		hipadd.setValue(s, -5 * Pi / 180);
+		hiprot.setValue(s, 0 * Pi / 180);
+		kneeflex.setValue(s, -52.9 * Pi / 180);
+		ankleangle.setValue(s, 2.09 * Pi / 180);
+		subtalar.setValue(s, 0 * Pi / 180); */
 
-		*/
+		
 
-	//	std::cout << pedalPositioninG(s, "B_Pedal", 0, osimModel) << std::endl;
+		// std::cout << pedalPositioninG(s, "BPedal", 0, osimModel) << std::endl;
 
 		std::cout << "System Initialized" << std::endl;
 
@@ -789,11 +846,11 @@ int main()
 
 		// Define the initial and final simulation times
 		double initialTime = 0.0;
-		double finalTime = 2;
+		double finalTime = 2.0;
 
 
-		controller->setinitTime(initialTime);
-		controller->setfinalTime(finalTime);
+	//	controller->setinitTime(initialTime);
+	//	controller->setfinalTime(finalTime);
 
 		//Vec3 A(0.845, -0.1968, 0.1788);
 		//Vec3 B(0.872, -0.2188, 0.1788);
@@ -812,16 +869,18 @@ int main()
 		//	double System_End_Time = 1.00;
 		//	int System_Num_step = 2000;
 
-		//	for (int i = 0; i < System_Num_step; i++)
-		//	{
-		//		// Define the initial and final simulation times
-		//		initialTime = System_StartTim * 2 + System_timestep * i;
-		//		if (i == System_Num_step - 1)
-		//			finalTime = System_End_Time;
-		//		else
-		//			finalTime = initialTime + System_timestep;
+			for (int i = 0; i < System_Num_step; i++)
+			{
+				// Define the initial and final simulation times
+				initialTime = System_StartTim + System_timestep * i;
+				if (i == System_Num_step - 1)
+					finalTime = System_End_Time;
+				else
+					finalTime = initialTime + System_timestep;
 
-		//		controller->setContactForces(contForce);
+				controller->setContactForces(contForce);
+				controller->setinitTime(initialTime);
+				controller->setfinalTime(finalTime);
 
 		//		switch (j)
 		//		{
@@ -839,42 +898,42 @@ int main()
 		//			break;
 		//		}
 
-		//		// Integrate from initial time to final time
-		//		manager.setInitialTime(initialTime);
-		//		manager.setFinalTime(finalTime);
-		//		std::cout << "\n\nIntegrating from " << initialTime << " to " << finalTime << std::endl;
-		//		manager.integrate(s);
-		//		std::cout << " Cycle [ " << i + 1 << " / " << System_Num_step << " ] has done! \n" << std::endl;
+				// Integrate from initial time to final time
+				manager.setInitialTime(initialTime);
+				manager.setFinalTime(finalTime);
+				std::cout << "\n\nIntegrating from " << initialTime << " to " << finalTime << std::endl;
+				manager.integrate(s);
+				std::cout << " Cycle [ " << i + 1 << " / " << System_Num_step << " ] has done! \n" << std::endl;
 
-		//		const Storage& forcestorage = aForceReporter->getForceStorage();
-		//		contForce = force(forcestorage, finalTime);
+				const Storage& forcestorage = aForceReporter->getForceStorage();
+				contForce = force(forcestorage, finalTime);
 
-		//		std::cout << contForce << std::endl;
+				std::cout << contForce << std::endl;
 
-		//	}
+			}
 		//}
 		
 		// Integrate from initial time to final time
-		manager.setInitialTime(initialTime);
-		manager.setFinalTime(finalTime);
-		std::cout << "\n\nIntegrating from " << initialTime << " to " << finalTime << std::endl;
-		manager.integrate(s);
+		// manager.setInitialTime(initialTime);
+		// manager.setFinalTime(finalTime);
+		// std::cout << "\n\nIntegrating from " << initialTime << " to " << finalTime << std::endl;
+		// manager.integrate(s);
 		// std::cout << " Cycle [ " << i + 1 << " / " << System_Num_step << " ] has done! \n" << std::endl;
 
-		const Storage& forcestorage = aForceReporter->getForceStorage();
-		contForce = force(forcestorage, finalTime);
+		// const Storage& forcestorage = aForceReporter->getForceStorage();
+		// contForce = force(forcestorage, finalTime);
 
-		std::cout << contForce << std::endl;
+		// std::cout << contForce << std::endl;
 
 		// Save the simulation results
 		Storage statesDegrees(manager.getStateStorage());
-		statesDegrees.print("./Results/driverleg-states_toBrake2.sto");
+		statesDegrees.print("./Results/driverleg-states_ImpCon.sto");
 		osimModel.updSimbodyEngine().convertRadiansToDegrees(statesDegrees);
 		statesDegrees.setWriteSIMMHeader(true);
-		osimModel.printControlStorage("./Results/driverleg-controls_toBrake2.sto");
+		osimModel.printControlStorage("./Results/driverleg-controls_ImpCon.sto");
 
-		aForceReporter->printResults("ForceReport_toBrake2", "./Results/ForceData", 0.005, ".sto");
-		aBodyKinematics->printResults("BodyKinematics_toBrake2", "./Results/KinematicsData", 0.005, ".sto");
+		aForceReporter->printResults("ForceReport_ImpCon", "./Results/ForceData", 0.005, ".sto");
+		aBodyKinematics->printResults("BodyKinematics_ImpCon", "./Results/KinematicsData", 0.005, ".sto");
 
 
 	}
