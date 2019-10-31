@@ -1,0 +1,10 @@
+Contact	TargetBody	Geometry
+GPedalForce_01	G_Pedal	G_Pedal_Contact
+GPedalForce_02	G_Pedal	G_Pedal_Contact
+GPedalForce_03	G_Pedal	G_Pedal_Contact
+BPedalForce_01	B_Pedal	B_Pedal_Contact
+BPedalForce_02	B_Pedal	B_Pedal_Contact
+BPedalForce_03	B_Pedal	B_Pedal_Contact
+foot-cs_r_01	Floor_Cushion	Floor_Cushion-Contact
+foot-cs_r_02	Floor_Cushion	Floor_Cushion-Contact
+foot-cs_r_03	Floor_Cushion	Floor_Cushion-Contact
